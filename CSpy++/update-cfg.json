@@ -1,0 +1,45 @@
+{
+    "encoding" : "utf-8",
+    "appname" : "cspypp",
+    "href" : {
+        "enabled" : false,
+        "destination" : ""
+    },
+    "udfileVersion" : 3,
+    "minimumVersion" : 1,
+    "compatHref" : {
+        
+    },
+    "currentVersion" : {
+        "version" : "0.0.2",
+        "build" : 1,
+        "preview" : true,
+        "previewType" : "Technical Preview",
+        "available" : true,
+        "description" : "Initial Version.",
+        "package" : {
+            "href" : "https://jsjtsty.github.io/cspypp/CSpy++_v0.0.1_x86.zip",
+            "sha256" : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "package64" : {
+            "href" : "https://jsjtsty.github.io/ISLStudio-Update/cspypp/CSpy++_v0.0.1_x64.zip",
+            "sha256" : "A1456425577E618A9A094DE88B65A172231A5922017650166DC671084653162F"
+        }
+    },
+    "stableVersion" : {
+        "version" : "0.0.1",
+        "build" : 1,
+        "preview" : true,
+        "previewType" : "Technical Preview",
+        "available" : true,
+        "description" : "Initial Version.",
+        "package" : {
+            "href" : "https://jsjtsty.github.io/cspypp/CSpy++_v0.0.1_x86.zip",
+            "sha256" : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "package64" : {
+            "href" : "https://jsjtsty.github.io/cspypp/CSpy++_v0.0.1_x64.zip",
+            "sha256" : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+    }
+}
