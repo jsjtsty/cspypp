@@ -1,6 +1,7 @@
 ﻿#include "framework.h"
 #include "update.h"
 #include <unzipper.h>
+#include <Windows.h>
 
 HINSTANCE hInstance;
 HINSTANCE GetCurrentInstance();

@@ -13,3 +13,5 @@ public:
 
 	inline uint64_t getFileSize() const noexcept;
 };
+
+typedef std::shared_ptr<File*> FilePtr;

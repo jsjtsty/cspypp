@@ -4,5 +4,5 @@
 #include <string>
 
 namespace JsonExt {
-	std::wstring readString(const Json::Value& _val);
+	std::wstring read_wstring(const Json::Value& _val);
 }

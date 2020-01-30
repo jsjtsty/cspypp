@@ -25,6 +25,9 @@
     <Filter Include="DiskOperator">
       <UniqueIdentifier>{34cbbdc4-1f28-4b47-8b18-c198fc5e2117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProgramUpdate">
+      <UniqueIdentifier>{16b4599d-9fc3-4006-b79d-2ba63ca62671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -43,9 +46,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="general.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ProgramUpdate.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Version.h">
@@ -87,6 +87,18 @@
     <ClInclude Include="Time.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="VolumeDirectory.h">
+      <Filter>FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="USBDirectory.h">
+      <Filter>FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramUpdate.h">
+      <Filter>ProgramUpdate</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLister.h">
+      <Filter>DiskOperator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
@@ -96,9 +108,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Initialization.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgramUpdate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Version.cpp">
@@ -139,6 +148,18 @@
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="VolumeDirectory.cpp">
+      <Filter>FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="USBDirectory.cpp">
+      <Filter>FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramUpdate.cpp">
+      <Filter>ProgramUpdate</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLister.cpp">
+      <Filter>DiskOperator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

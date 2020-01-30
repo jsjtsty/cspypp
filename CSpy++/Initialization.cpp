@@ -4,7 +4,7 @@
 #include "LogSupport.h"
 #include "ProgramUpdate.h"
 #include "Time.h"
-#include "USBDevice.h"
+#include "USBDirectory.h"
 using namespace std;
 using namespace log4cplus;
 
@@ -16,9 +16,6 @@ int InitProgram()
     locale::global(locale("chs"));
     InitConstants();
     InitLogSystem();
-
-	USBDevice device(L'H');
-
     return 0;
 }
 

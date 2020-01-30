@@ -3,12 +3,16 @@
 #include "File.h"
 #include <set>
 
+class Directory;
+
+typedef std::shared_ptr<Directory> DirectoryPtr;
+
 class Directory : public Node
 {
 public:
 	Directory() : Node() {}
 	Directory(WIN32_FIND_DATA _val, const std::wstring& path) : Node(_val, path) {}
-	~Directory();
+	virtual ~Directory();
 
 	virtual bool isDirectory() const noexcept override;
 	virtual bool isFile() const noexcept override;
@@ -28,4 +32,3 @@ protected:
 	DirectorySet directoryList;
 	FileSet fileList;
 };
-

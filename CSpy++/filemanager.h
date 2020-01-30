@@ -5,3 +5,7 @@
 #endif
 
 #include "Node.h"
+#include "File.h"
+#include "Directory.h"
+#include "VolumeDirectory.h"
+#include "USBDirectory.h"

@@ -93,3 +93,58 @@ bool USBDevice::updateInformation()
 
 	return true;
 }
+
+inline uint16_t USBDevice::getDeviceType() const noexcept
+{
+	return deviceType;
+}
+
+inline uint16_t USBDevice::getDeviceTypeModifier() const noexcept
+{
+	return deviceTypeModifier;
+}
+
+inline uint32_t USBDevice::getVersion() const noexcept
+{
+	return version;
+}
+
+inline uint32_t USBDevice::getSize() const noexcept
+{
+	return size;
+}
+
+inline bool USBDevice::isRemovableMedia() const noexcept
+{
+	return removableMedia;
+}
+
+inline bool USBDevice::isCommandQueueing() const noexcept
+{
+	return commandQueueing;
+}
+
+inline std::wstring USBDevice::getVendorId() const noexcept
+{
+	return vendorId;
+}
+
+inline std::wstring USBDevice::getProductId() const noexcept
+{
+	return productId;
+}
+
+inline std::wstring USBDevice::getProductRevision() const noexcept
+{
+	return productRevision;
+}
+
+inline std::wstring USBDevice::getSerialNumber() const noexcept
+{
+	return serialNumber;
+}
+
+inline std::wstring USBDevice::getBusType() const noexcept
+{
+	return busType;
+}

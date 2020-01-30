@@ -406,7 +406,7 @@ bool ProgramUpdate::checkVersion(Json::Value& version, UpdateInformation& info, 
 		info.code = CS_UPDATE_INVALID_CFGFILE;
 		return false;
 	}
-	wstring versionStr = JsonExt::readString(version["version"]);
+	wstring versionStr = JsonExt::read_wstring(version["version"]);
 	wregex reg(LR"RegexString([0-9]+\.[0-9]+\.[0-9]+)RegexString");
 	if (!regex_match(versionStr, reg)) {
 		info.code = CS_UPDATE_INVALID_CFGFILE;
@@ -446,7 +446,7 @@ bool ProgramUpdate::checkVersion(Json::Value& version, UpdateInformation& info, 
 				info.code = CS_UPDATE_INVALID_CFGFILE;
 				return false;
 			}
-			wstring spType = JsonExt::readString(previewType);
+			wstring spType = JsonExt::read_wstring(previewType);
 			Version::PreviewType type = Version::PreviewType::UNKNOWN;
 			if (spType == L"Technical Preview") {
 				type = Version::PreviewType::TECHNICAL_PREVIEW;
@@ -476,7 +476,7 @@ bool ProgramUpdate::checkVersion(Json::Value& version, UpdateInformation& info, 
 			info.code = CS_UPDATE_INVALID_CFGFILE;
 			return false;
 		}
-		pver.setDescription(JsonExt::readString(description));
+		pver.setDescription(JsonExt::read_wstring(description));
 	}
 
 	if (version.isMember("package")) {
@@ -493,12 +493,12 @@ bool ProgramUpdate::checkVersion(Json::Value& version, UpdateInformation& info, 
 				return false;
 			}
 			Hash hash;
-			wstring s = JsonExt::readString(sha256);
-			if (!hash.parse(JsonExt::readString(sha256))) {
+			wstring s = JsonExt::read_wstring(sha256);
+			if (!hash.parse(JsonExt::read_wstring(sha256))) {
 				info.code = CS_UPDATE_INVALID_CFGFILE;
 				return false;
 			}
-			pver.setPackage(JsonExt::readString(href), hash);
+			pver.setPackage(JsonExt::read_wstring(href), hash);
 		}
 	}
 
@@ -516,11 +516,11 @@ bool ProgramUpdate::checkVersion(Json::Value& version, UpdateInformation& info, 
 				return false;
 			}
 			Hash hash;
-			if (!hash.parse(JsonExt::readString(sha256))) {
+			if (!hash.parse(JsonExt::read_wstring(sha256))) {
 				info.code = CS_UPDATE_INVALID_CFGFILE;
 				return false;
 			}
-			pver.setPackage64(JsonExt::readString(href), hash);
+			pver.setPackage64(JsonExt::read_wstring(href), hash);
 		}
 	}
 

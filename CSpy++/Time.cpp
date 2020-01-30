@@ -53,7 +53,7 @@ Time::Time(uint16_t year, uint16_t month, uint16_t day, uint16_t hour, uint16_t 
 		throw TimeError("Invalid time.");
 	}
 
-		this->year = year; this->month = month; this->day = day;
+	this->year = year; this->month = month; this->day = day;
 	this->hour = hour; this->minute = minute; this->second = second;
 	this->milliseconds = milliseconds;
 

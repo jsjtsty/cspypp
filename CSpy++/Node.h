@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdint>
 #include <Windows.h>
+#include <memory>
 #include "Time.h"
 
 class Node
@@ -28,3 +29,5 @@ protected:
 	std::wstring filePath;
 	wchar_t fileName[260] = { 0 };
 };
+
+typedef std::shared_ptr<Node> NodePtr;
