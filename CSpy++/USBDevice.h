@@ -2,7 +2,7 @@
 #include <string>
 #include "Volume.h"
 
-class USBDevice : Volume
+class USBDevice : public Volume
 {
 public:
 	USBDevice() : Volume() {}
@@ -10,17 +10,17 @@ public:
 
 	virtual bool updateInformation() override;
 
-	inline uint16_t getDeviceType() const noexcept;
-	inline uint16_t getDeviceTypeModifier() const noexcept;
-	inline uint32_t getVersion() const noexcept;
-	inline uint32_t getSize() const noexcept;
-	inline bool isRemovableMedia() const noexcept;
-	inline bool isCommandQueueing() const noexcept;
-	inline std::wstring getVendorId() const noexcept;
-	inline std::wstring getProductId() const noexcept;
-	inline std::wstring getProductRevision() const noexcept;
-	inline std::wstring getSerialNumber() const noexcept;
-	inline std::wstring getBusType() const noexcept;
+	uint16_t getDeviceType() const noexcept;
+	uint16_t getDeviceTypeModifier() const noexcept;
+	uint32_t getVersion() const noexcept;
+	uint32_t getSize() const noexcept;
+	bool isRemovableMedia() const noexcept;
+	bool isCommandQueueing() const noexcept;
+	std::wstring getVendorId() const noexcept;
+	std::wstring getProductId() const noexcept;
+	std::wstring getProductRevision() const noexcept;
+	std::wstring getSerialNumber() const noexcept;
+	std::wstring getBusType() const noexcept;
 
 protected:
 	uint16_t deviceType = 0, deviceTypeModifier = 0;

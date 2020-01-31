@@ -42,9 +42,6 @@
     <ClInclude Include="CSpy++.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Notify.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="general.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -102,9 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Notify.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Initialization.cpp">
@@ -174,5 +168,25 @@
     <Image Include="CSpy++.ico">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="copy_zlib.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="copying_curl.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="copying_libssh2.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="copying_openssl.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="jsoncpp_copying.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="log4cplus_copying.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

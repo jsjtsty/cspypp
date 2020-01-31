@@ -12,7 +12,7 @@ bool File::isFile() const noexcept
 	return true;
 }
 
-inline uint64_t File::getFileSize() const noexcept
+uint64_t File::getFileSize() const noexcept
 {
 	return fileSize;
 }

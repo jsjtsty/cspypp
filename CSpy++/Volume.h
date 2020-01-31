@@ -8,16 +8,16 @@ public:
 	Volume() {}
 	Volume(wchar_t driveLetter);
 
-	inline wchar_t getDriveLetter() const noexcept;
-	inline std::wstring getDiskLabel() const noexcept;
-	inline std::wstring getFileSystem() const noexcept;
-	inline uint64_t getTotalSpace() const noexcept;
-	inline uint64_t getFreeSpace() const noexcept;
-	inline uint64_t getFreeSpaceToCaller() const noexcept;
-	inline uint32_t getFileSystemFlags() const noexcept;
-	inline uint32_t getVolumeSerialNumber() const noexcept;
-	inline uint32_t getMaximumComponentLength() const noexcept;
-	inline uint32_t getDiskType() const noexcept;
+	wchar_t getDriveLetter() const noexcept;
+	std::wstring getDiskLabel() const noexcept;
+	std::wstring getFileSystem() const noexcept;
+	uint64_t getTotalSpace() const noexcept;
+	uint64_t getFreeSpace() const noexcept;
+	uint64_t getFreeSpaceToCaller() const noexcept;
+	uint32_t getFileSystemFlags() const noexcept;
+	uint32_t getVolumeSerialNumber() const noexcept;
+	uint32_t getMaximumComponentLength() const noexcept;
+	uint32_t getDiskType() const noexcept;
 
 	virtual bool updateInformation();
 

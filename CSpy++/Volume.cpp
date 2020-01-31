@@ -9,52 +9,52 @@ Volume::Volume(wchar_t driveLetter)
 	updateInformation();
 }
 
-inline wchar_t Volume::getDriveLetter() const noexcept
+wchar_t Volume::getDriveLetter() const noexcept
 {
 	return driveLetter;
 }
 
-inline wstring Volume::getDiskLabel() const noexcept
+wstring Volume::getDiskLabel() const noexcept
 {
 	return diskLabel;
 }
 
-inline wstring Volume::getFileSystem() const noexcept
+wstring Volume::getFileSystem() const noexcept
 {
 	return fileSystem;
 }
 
-inline uint64_t Volume::getTotalSpace() const noexcept
+uint64_t Volume::getTotalSpace() const noexcept
 {
 	return totalSpace;
 }
 
-inline uint64_t Volume::getFreeSpace() const noexcept
+uint64_t Volume::getFreeSpace() const noexcept
 {
 	return freeSpace;
 }
 
-inline uint64_t Volume::getFreeSpaceToCaller() const noexcept
+uint64_t Volume::getFreeSpaceToCaller() const noexcept
 {
 	return freeSpaceToCaller;
 }
 
-inline uint32_t Volume::getFileSystemFlags() const noexcept
+uint32_t Volume::getFileSystemFlags() const noexcept
 {
 	return fileSystemFlags;
 }
 
-inline uint32_t Volume::getVolumeSerialNumber() const noexcept
+uint32_t Volume::getVolumeSerialNumber() const noexcept
 {
 	return volumeSerialNumber;
 }
 
-inline uint32_t Volume::getMaximumComponentLength() const noexcept
+uint32_t Volume::getMaximumComponentLength() const noexcept
 {
 	return maximumComponentLength;
 }
 
-inline uint32_t Volume::getDiskType() const noexcept
+uint32_t Volume::getDiskType() const noexcept
 {
 	return diskType;
 }

@@ -158,7 +158,6 @@ UpdateResult ProgramUpdate::downloadUpdate(const Version::Package& package) cons
 UpdateResult ProgramUpdate::update() const
 {
 	UpdateResult result = { CS_UPDATE_OK,0 };
-	BOOL delRet;
 	FILE* stream;
 	errno_t err = _wfopen_s(&stream, L"update.zip", L"rb");
 	if (err != 0) {

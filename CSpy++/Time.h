@@ -17,21 +17,21 @@ public:
 	FILETIME toFileTime() const;
 	FILETIME toLocalFileTime() const;
 
-	std::wstring toString() const;
-	std::string toANSIString() const;
+	std::wstring toString(bool local = true) const;
+	std::string toANSIString(bool local = true) const;
 	std::wstring format(const std::wstring& _format) const;
 	std::string format(const std::string& _format) const;
 
 	Time& parse(const std::wstring& str);
 	Time& parse(const std::string& str);
 
-	inline uint16_t getYear() const noexcept;
-	inline uint16_t getMonth() const noexcept;
-	inline uint16_t getDay() const noexcept;
-	inline uint16_t getHour() const noexcept;
-	inline uint16_t getMinute() const noexcept;
-	inline uint16_t getSecond() const noexcept;
-	inline uint16_t getMilliseconds() const noexcept;
+	uint16_t getYear() const noexcept;
+	uint16_t getMonth() const noexcept;
+	uint16_t getDay() const noexcept;
+	uint16_t getHour() const noexcept;
+	uint16_t getMinute() const noexcept;
+	uint16_t getSecond() const noexcept;
+	uint16_t getMilliseconds() const noexcept;
 
 	void setYear(uint16_t _val);
 	void setMonth(uint16_t _val);

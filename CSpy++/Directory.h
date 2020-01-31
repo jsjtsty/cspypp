@@ -1,7 +1,7 @@
 #pragma once
 #include "Node.h"
 #include "File.h"
-#include <set>
+#include <vector>
 
 class Directory;
 
@@ -17,18 +17,18 @@ public:
 	virtual bool isDirectory() const noexcept override;
 	virtual bool isFile() const noexcept override;
 
-	typedef std::set<Directory*> DirectorySet;
-	typedef std::set<File*> FileSet;
+	typedef std::vector<Directory*> DirectoryVector;
+	typedef std::vector<File*> FileVector;
 
 	File* addFile(File* file);
 	File* addFile(WIN32_FIND_DATA _val, const std::wstring& path);
 	Directory* addDirectory(Directory* file);
 	Directory* addDirectory(WIN32_FIND_DATA _val, const std::wstring& path);
 
-	inline const DirectorySet& getDirectoryList() const;
-	inline const FileSet& getFileList() const;
+	const DirectoryVector& getDirectoryList() const;
+	const FileVector& getFileList() const;
 
 protected:
-	DirectorySet directoryList;
-	FileSet fileList;
+	DirectoryVector directoryList;
+	FileVector fileList;
 };

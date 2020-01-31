@@ -1,8 +1,12 @@
-#pragma code_page(65001)
-
+// Microsoft Visual C++ generated resource script.
+//
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
 #ifndef APSTUDIO_INVOKED
 #include "targetver.h"
 #endif
@@ -10,32 +14,50 @@
 #include "windows.h"
 #undef APSTUDIO_HIDDEN_SYMBOLS
 
+/////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
+/////////////////////////////////////////////////////////////////////////////
+// ÖÐÎÄ(¼òÌå£¬ÖÐ¹ú) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
 
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
 IDI_CSPY                ICON                    "CSpy++.ico"
 
 IDI_SMALL               ICON                    "small.ico"
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
 
 IDC_CSPY MENU
 BEGIN
-    POPUP "æ–‡ä»¶(&F)"
+    POPUP "ÎÄ¼þ(&F)"
     BEGIN
-        MENUITEM "é€€å‡º(&X)",                      IDM_EXIT
+        MENUITEM "ÍË³ö(&X)",                      IDM_EXIT
     END
-    POPUP "å¸®åŠ©(&H)"
+    POPUP "°ïÖú(&H)"
     BEGIN
-        MENUITEM "å…³äºŽ(&A) ...",                  IDM_ABOUT
+        MENUITEM "¹ØÓÚ(&A) ...",                  IDM_ABOUT
     END
 END
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
 
 IDC_CSPY ACCELERATORS
 BEGIN
@@ -45,6 +67,10 @@ END
 
 
 #ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
 
 1 TEXTINCLUDE 
 BEGIN
@@ -68,8 +94,13 @@ BEGIN
     "\0"
 END
 
-#endif    
+#endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 0,0,1,0
@@ -105,6 +136,28 @@ BEGIN
 END
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// LICENSE
+//
+
+IDL_CURL                LICENSE                 "copying_curl.txt"
+
+IDL_JSONCPP             LICENSE                 "jsoncpp_copying.txt"
+
+IDL_LOG4CPLUS           LICENSE                 "log4cplus_copying.txt"
+
+IDL_ZLIB                LICENSE                 "copy_zlib.txt"
+
+IDL_OPENSSL             LICENSE                 "copying_openssl.txt"
+
+IDL_LIBSSH2             LICENSE                 "copying_libssh2.txt"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
 
 STRINGTABLE
 BEGIN
@@ -112,10 +165,18 @@ BEGIN
     IDC_CSPY                "CSPY"
 END
 
-#endif    
+#endif    // ÖÐÎÄ(¼òÌå£¬ÖÐ¹ú) resources
+/////////////////////////////////////////////////////////////////////////////
+
 
 
 #ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
 
 
-#endif    
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

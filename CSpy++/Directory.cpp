@@ -23,36 +23,36 @@ bool Directory::isFile() const noexcept
 
 File* Directory::addFile(File* file)
 {
-	fileList.insert(file);
+	fileList.push_back(file);
 	return file;
 }
 
 File* Directory::addFile(WIN32_FIND_DATA _val, const std::wstring & path)
 {
 	File* file = new File(_val, path);
-	fileList.insert(file);
+	fileList.push_back(file);
 	return file;
 }
 
 Directory* Directory::addDirectory(Directory* file)
 {
-	directoryList.insert(file);
+	directoryList.push_back(file);
 	return file;
 }
 
 Directory* Directory::addDirectory(WIN32_FIND_DATA _val, const std::wstring& path)
 {
 	Directory* file = new Directory(_val, path);
-	directoryList.insert(file);
+	directoryList.push_back(file);
 	return file;
 }
 
-inline const Directory::DirectorySet& Directory::getDirectoryList() const
+const Directory::DirectoryVector& Directory::getDirectoryList() const
 {
 	return directoryList;
 }
 
-inline const Directory::FileSet& Directory::getFileList() const
+const Directory::FileVector& Directory::getFileList() const
 {
 	return fileList;
 }

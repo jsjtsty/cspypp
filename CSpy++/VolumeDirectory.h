@@ -6,8 +6,8 @@ class VolumeDirectory : public Directory, public Volume
 {
 public:
 	VolumeDirectory();
-	VolumeDirectory(wchar_t driveLetter, WIN32_FIND_DATA _val);
-	VolumeDirectory(const Volume& volume, WIN32_FIND_DATA _val);
+	VolumeDirectory(wchar_t driveLetter);
+	VolumeDirectory(const Volume& volume);
 	VolumeDirectory(const Volume& volume, const Directory& directory);
 };
 

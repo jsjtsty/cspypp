@@ -83,12 +83,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x86\ZlibDllRelease\include;E:\Library\log4cplus-2.0.5\x86-dll\include;E:\Library\jsoncpp-1.9.2\x86-dll\include;D:\OpenSSL\1.1.1d\x86\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Library\zipper-1.0.1\x86;E:\Library\zlib-1.2.11\x86\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x86-dll\lib;E:\Library\jsoncpp-1.9.2\x86-dll\lib;D:\OpenSSL\1.1.1d\x86\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
+    <LibraryPath>$(LibraryPath);E:\Library\zipper-1.0.1\x86;E:\Library\zlib-1.2.11\x86\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x86-dll\lib;E:\Library\jsoncpp-1.9.2\x86-dll\lib;D:\OpenSSL\1.1.1d\x86\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x64\ZlibDllRelease\include;E:\Library\log4cplus-2.0.5\x64-dll\include;E:\Library\jsoncpp-1.9.2\x64-dll\include;D:\OpenSSL\1.1.1d\x64\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Library\zipper-1.0.1\x64;E:\Library\zlib-1.2.11\x64\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x64-dll\lib;E:\Library\jsoncpp-1.9.2\x64-dll\lib;D:\OpenSSL\1.1.1d\x64\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
+    <LibraryPath>$(LibraryPath);E:\Library\zipper-1.0.1\x64;E:\Library\zlib-1.2.11\x64\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x64-dll\lib;E:\Library\jsoncpp-1.9.2\x64-dll\lib;D:\OpenSSL\1.1.1d\x64\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -183,7 +183,6 @@
     <ClInclude Include="JsonExt.h" />
     <ClInclude Include="LogSupport.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Notify.h" />
     <ClInclude Include="ProgramUpdate.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StringExt.h" />
@@ -207,7 +206,6 @@
     <ClCompile Include="Initialization.cpp" />
     <ClCompile Include="JsonExt.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Notify.cpp" />
     <ClCompile Include="ProgramUpdate.cpp" />
     <ClCompile Include="StringExt.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -223,6 +221,14 @@
   <ItemGroup>
     <Image Include="CSpy++.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="copying_curl.txt" />
+    <Text Include="copying_libssh2.txt" />
+    <Text Include="copying_openssl.txt" />
+    <Text Include="copy_zlib.txt" />
+    <Text Include="jsoncpp_copying.txt" />
+    <Text Include="log4cplus_copying.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,12 +15,13 @@ public:
 	virtual bool isFile() const noexcept;
 
 	void setData(WIN32_FIND_DATA _val, const std::wstring& path);
+	void setPath(std::wstring_view _val);
 
-	inline Time getCreationTime() const noexcept;
-	inline Time getLastAccessTime() const noexcept;
-	inline Time getLastWriteTime() const noexcept;
-	inline std::wstring getPath() const noexcept;
-	inline std::wstring getFileName() const noexcept;
+	Time getCreationTime() const noexcept;
+	Time getLastAccessTime() const noexcept;
+	Time getLastWriteTime() const noexcept;
+	std::wstring getPath() const noexcept;
+	std::wstring getFileName() const noexcept;
 
 protected:
 	uint32_t fileAttributes = 0;

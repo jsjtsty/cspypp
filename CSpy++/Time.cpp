@@ -104,17 +104,31 @@ FILETIME Time::toLocalFileTime() const
 	return res;
 }
 
-wstring Time::toString() const
+wstring Time::toString(bool local) const
 {
 	wchar_t buffer[64];
-	_snwprintf_s(buffer, 64, 63, L"%u/%u/%u %02u:%02u:%02u.%03u", year, month, day, hour, minute, second, milliseconds);
+	if (local) {
+		SYSTEMTIME time = toLocalSystemTime();
+		_snwprintf_s(buffer, 64, 63, L"%u/%u/%u %02u:%02u:%02u.%03u", time.wYear, time.wMonth, time.wDay, time.wHour, 
+			time.wMinute, time.wSecond, time.wMilliseconds);
+	}
+	else {
+		_snwprintf_s(buffer, 64, 63, L"%u/%u/%u %02u:%02u:%02u.%03u", year, month, day, hour, minute, second, milliseconds);
+	}
 	return buffer;
 }
 
-string Time::toANSIString() const
+string Time::toANSIString(bool local) const
 {
 	char buffer[64];
-	_snprintf_s(buffer, 64, 63, "%u/%u/%u %02u:%02u:%02u.%03u", year, month, day, hour, minute, second, milliseconds);
+	if (local) {
+		SYSTEMTIME time = toLocalSystemTime();
+		_snprintf_s(buffer, 64, 63, "%u/%u/%u %02u:%02u:%02u.%03u", time.wYear, time.wMonth, time.wDay, time.wHour,
+			time.wMinute, time.wSecond, time.wMilliseconds);
+	}
+	else {
+		_snprintf_s(buffer, 64, 63, "%u/%u/%u %02u:%02u:%02u.%03u", year, month, day, hour, minute, second, milliseconds);
+	}
 	return buffer;
 }
 
@@ -661,37 +675,37 @@ bool Time::isLeapYear(uint16_t year)
 	}
 }
 
-inline uint16_t Time::getYear() const noexcept
+uint16_t Time::getYear() const noexcept
 {
 	return year;
 }
 
-inline uint16_t Time::getMonth() const noexcept
+uint16_t Time::getMonth() const noexcept
 {
 	return month;
 }
 
-inline uint16_t Time::getDay() const noexcept
+uint16_t Time::getDay() const noexcept
 {
 	return day;
 }
 
-inline uint16_t Time::getHour() const noexcept
+uint16_t Time::getHour() const noexcept
 {
 	return year;
 }
 
-inline uint16_t Time::getMinute() const noexcept
+uint16_t Time::getMinute() const noexcept
 {
 	return minute;
 }
 
-inline uint16_t Time::getSecond() const noexcept
+uint16_t Time::getSecond() const noexcept
 {
 	return second;
 }
 
-inline uint16_t Time::getMilliseconds() const noexcept
+uint16_t Time::getMilliseconds() const noexcept
 {
 	return milliseconds;
 }
