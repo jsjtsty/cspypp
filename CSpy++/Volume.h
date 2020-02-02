@@ -23,7 +23,7 @@ public:
 
 protected:
 	wchar_t driveLetter = 0;
-	std::wstring diskLabel, fileSystem;
+	wchar_t diskLabel[32] = { 0 }, fileSystem[32] = { 0 };
 	uint64_t totalSpace = 0, freeSpace = 0, freeSpaceToCaller = 0;
 	uint32_t fileSystemFlags = 0, volumeSerialNumber = 0, maximumComponentLength = 0;
 	uint32_t diskType = 0;

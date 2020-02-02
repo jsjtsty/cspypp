@@ -70,8 +70,8 @@ bool Volume::updateInformation()
 	wchar_t volumeName[260], fileSystemName[260];
 	GetVolumeInformationW(path, volumeName, 260, (LPDWORD)&volumeSerialNumber, (LPDWORD)&maximumComponentLength, (LPDWORD)&fileSystemFlags, fileSystemName, 260);
 	GetDiskFreeSpaceExW(path, (PULARGE_INTEGER)&freeSpaceToCaller, (PULARGE_INTEGER)&totalSpace, (PULARGE_INTEGER)&freeSpace);
-	this->diskLabel = volumeName;
-	this->fileSystem = fileSystemName;
+	wcscpy_s(this->diskLabel, volumeName);
+	wcscpy_s(this->fileSystem, fileSystemName);
 
 	return true;
 }

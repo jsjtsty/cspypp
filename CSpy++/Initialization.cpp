@@ -3,6 +3,7 @@
 #include <string>
 #include "LogSupport.h"
 #include "FileLister.h"
+#include "FileList.h"
 using namespace std;
 using namespace log4cplus;
 
@@ -11,33 +12,21 @@ void InitConstants();
 
 int InitProgram()
 {
-    locale::global(locale("chs"));
-    InitConstants();
-    InitLogSystem();
-    return 0;
-}
+	locale::global(locale("chs"));
+	InitConstants();
+	InitLogSystem();
+	_CrtSetDebugFillThreshold(0);
 
-void dfs(Directory* dir, FILE* file) {
-	const auto& dirSet = dir->getDirectoryList();
-	const auto& fileSet = dir->getFileList();
-	for (Directory* idir : dirSet) {
-		dfs(idir, file);
-	}
-	for (File* ifile : fileSet) {
-		fwprintf_s(file, L"%s\n", ifile->getPath().c_str());
-	}
+	//auto usb = FileLister::list_usb(L'H');
+	FileList list(L"flist.csf");
+	//list.writeFile();
+	list.readFileList();
+	return 0;
 }
 
 int HandleCreateMessage(WPARAM wParam, LPARAM lParam)
 {
-	VolumeDirectoryPtr ptr = FileLister::list_volume(L'E');
-	FILE* file;
-	_wfopen_s(&file, L"flist.csf", L"wt");
-	fwprintf_s(file, L"Start Time: %s\n\n", Time::getLocalTime().toString().c_str());
-	dfs(ptr.get(), file);
-	fwprintf_s(file, L"\nEnd Time: %s", Time::getLocalTime().toString().c_str());
-	fclose(file);
-	ptr.reset();
+	
 	return 0;
 }
 

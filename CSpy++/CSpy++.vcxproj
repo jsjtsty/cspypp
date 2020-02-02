@@ -174,6 +174,7 @@
     <ClInclude Include="CSpy++.h" />
     <ClInclude Include="Directory.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="FileList.h" />
     <ClInclude Include="FileLister.h" />
     <ClInclude Include="filemanager.h" />
     <ClInclude Include="framework.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Hash.h" />
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="JsonExt.h" />
+    <ClInclude Include="LicenseReader.h" />
     <ClInclude Include="LogSupport.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ProgramUpdate.h" />
@@ -200,11 +202,13 @@
     <ClCompile Include="Dependency.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="FileList.cpp" />
     <ClCompile Include="FileLister.cpp" />
     <ClCompile Include="Hash.cpp" />
     <ClCompile Include="Hasher.cpp" />
     <ClCompile Include="Initialization.cpp" />
     <ClCompile Include="JsonExt.cpp" />
+    <ClCompile Include="LicenseReader.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ProgramUpdate.cpp" />
     <ClCompile Include="StringExt.cpp" />
@@ -227,6 +231,7 @@
     <Text Include="copying_libssh2.txt" />
     <Text Include="copying_openssl.txt" />
     <Text Include="copy_zlib.txt" />
+    <Text Include="cspypp_copying.txt" />
     <Text Include="jsoncpp_copying.txt" />
     <Text Include="log4cplus_copying.txt" />
   </ItemGroup>

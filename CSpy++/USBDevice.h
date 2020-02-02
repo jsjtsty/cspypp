@@ -26,5 +26,5 @@ protected:
 	uint16_t deviceType = 0, deviceTypeModifier = 0;
 	uint32_t version = 0, size = 0;
 	bool removableMedia = false, commandQueueing = false;
-	std::wstring vendorId, productId, productRevision, serialNumber, busType;
+	wchar_t vendorId[32] = { 0 }, productId[32] = { 0 }, productRevision[32] = { 0 }, serialNumber[32] = { 0 }, busType[32] = { 0 };
 };

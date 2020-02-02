@@ -28,6 +28,12 @@
     <Filter Include="ProgramUpdate">
       <UniqueIdentifier>{16b4599d-9fc3-4006-b79d-2ba63ca62671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataManager">
+      <UniqueIdentifier>{c112e3b0-f486-46a7-b0a1-ff4ab4a127ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encryption">
+      <UniqueIdentifier>{0b9c8676-f66e-4cbd-82a2-9aa4ef8bdabc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +102,12 @@
     <ClInclude Include="FileLister.h">
       <Filter>DiskOperator</Filter>
     </ClInclude>
+    <ClInclude Include="FileList.h">
+      <Filter>DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LicenseReader.h">
+      <Filter>DataManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
@@ -155,6 +167,12 @@
     <ClCompile Include="FileLister.cpp">
       <Filter>DiskOperator</Filter>
     </ClCompile>
+    <ClCompile Include="FileList.cpp">
+      <Filter>DataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LicenseReader.cpp">
+      <Filter>DataManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSpy++.rc">
@@ -180,6 +198,9 @@
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="copying_openssl.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="cspypp_copying.txt">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="jsoncpp_copying.txt">

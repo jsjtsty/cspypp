@@ -85,6 +85,7 @@ namespace FileLister
 		VolumeDirectoryPtr dir = make_shared<VolumeDirectory>(driveLetter);
 		dir->setPath(path);
 		ListDirectory(dir.get());
+		dir->setFileAttributes(dir->getFileAttributes() | FILE_ATTRIBUTE_DIRECTORY);
 		return dir;
 	}
 
@@ -94,6 +95,7 @@ namespace FileLister
 		USBDirectoryPtr dir = make_shared<USBDirectory>(driveLetter);
 		dir->setPath(path);
 		ListDirectory(dir.get());
+		dir->setFileAttributes(dir->getFileAttributes() | FILE_ATTRIBUTE_DIRECTORY);
 		return dir;
 	}
 
@@ -103,6 +105,7 @@ namespace FileLister
 		USBDirectoryPtr dir = make_shared<USBDirectory>(usb);
 		dir->setPath(path);
 		ListDirectory(dir.get());
+		dir->setFileAttributes(dir->getFileAttributes() | FILE_ATTRIBUTE_DIRECTORY);
 		return dir;
 	}
 }

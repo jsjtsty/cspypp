@@ -1,5 +1,11 @@
 #include "Directory.h"
 
+Directory::Directory(const Time & creationTime, const Time & lastAccessTime, const Time & lastWriteTime, uint32_t fileAttributes,
+	uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID & guid)
+	: Node(creationTime, lastAccessTime, lastWriteTime, fileAttributes, fileSize, fileName, filePath, guid)
+{
+}
+
 Directory::~Directory()
 {
 	for (const File* ptr : fileList) {

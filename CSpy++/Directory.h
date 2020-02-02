@@ -12,6 +12,8 @@ class Directory : public Node
 public:
 	Directory() : Node() {}
 	Directory(WIN32_FIND_DATA _val, const std::wstring& path) : Node(_val, path) {}
+	Directory(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
+		uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID& guid);
 	virtual ~Directory();
 
 	virtual bool isDirectory() const noexcept override;

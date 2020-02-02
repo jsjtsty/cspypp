@@ -38,24 +38,6 @@ IDI_SMALL               ICON                    "small.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Menu
-//
-
-IDC_CSPY MENU
-BEGIN
-    POPUP "文件(&F)"
-    BEGIN
-        MENUITEM "退出(&X)",                      IDM_EXIT
-    END
-    POPUP "帮助(&H)"
-    BEGIN
-        MENUITEM "关于(&A) ...",                  IDM_ABOUT
-    END
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Accelerator
 //
 
@@ -152,6 +134,8 @@ IDL_ZLIB                LICENSE                 "copy_zlib.txt"
 IDL_OPENSSL             LICENSE                 "copying_openssl.txt"
 
 IDL_LIBSSH2             LICENSE                 "copying_libssh2.txt"
+
+IDL_CSPYPP              LICENSE                 "cspypp_copying.txt"
 
 
 /////////////////////////////////////////////////////////////////////////////

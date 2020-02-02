@@ -80,11 +80,11 @@ bool USBDevice::updateInformation()
 	removableMedia = DeviceDescriptor->RemovableMedia;
 	commandQueueing = DeviceDescriptor->CommandQueueing;
 
-	this->vendorId = to_wstring(trim(vendorId));
-	this->productId = to_wstring(trim(productId));
-	this->productRevision = to_wstring(trim(productRevision));
-	this->serialNumber = to_wstring(trim(serialNumber));
-	this->busType = busType;
+	wcscpy_s(this->vendorId,to_wstring(trim(vendorId)).c_str());
+	wcscpy_s(this->productId, to_wstring(trim(productId)).c_str());
+	wcscpy_s(this->productRevision, to_wstring(trim(productRevision)).c_str());
+	wcscpy_s(this->serialNumber, to_wstring(trim(serialNumber)).c_str());
+	wcscpy_s(this->busType, busType);
 	
 	free(DeviceDescriptorHeader);
 	free(DeviceDescriptor);
@@ -124,27 +124,27 @@ bool USBDevice::isCommandQueueing() const noexcept
 	return commandQueueing;
 }
 
-std::wstring USBDevice::getVendorId() const noexcept
+wstring USBDevice::getVendorId() const noexcept
 {
 	return vendorId;
 }
 
-std::wstring USBDevice::getProductId() const noexcept
+wstring USBDevice::getProductId() const noexcept
 {
 	return productId;
 }
 
-std::wstring USBDevice::getProductRevision() const noexcept
+wstring USBDevice::getProductRevision() const noexcept
 {
 	return productRevision;
 }
 
-std::wstring USBDevice::getSerialNumber() const noexcept
+wstring USBDevice::getSerialNumber() const noexcept
 {
 	return serialNumber;
 }
 
-std::wstring USBDevice::getBusType() const noexcept
+wstring USBDevice::getBusType() const noexcept
 {
 	return busType;
 }

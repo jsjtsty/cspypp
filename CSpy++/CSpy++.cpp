@@ -6,7 +6,9 @@
 
 #define MAX_LOADSTRING 100
 
-HINSTANCE hInst;                                WCHAR szTitle[MAX_LOADSTRING];                  WCHAR szWindowClass[MAX_LOADSTRING];            
+HINSTANCE hInst;
+WCHAR szTitle[MAX_LOADSTRING];
+WCHAR szWindowClass[MAX_LOADSTRING];
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, unsigned int, WPARAM, LPARAM);
@@ -21,11 +23,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	int initRes = InitProgram();
-	if (initRes) {
-		return initRes;
-	}
-
 	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDC_CSPY, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
@@ -33,6 +30,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	if (!InitInstance (hInstance, nCmdShow))
 	{
 		return FALSE;
+	}
+
+	int initRes = InitProgram();
+	if (initRes) {
+		return initRes;
 	}
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSPY));
@@ -68,6 +70,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	return (int) msg.wParam;
+}
+
+HINSTANCE GetCurrentInstance()
+{
+	return hInst;
 }
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
