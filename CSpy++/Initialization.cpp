@@ -2,8 +2,7 @@
 #include "general.h"
 #include <string>
 #include "LogSupport.h"
-#include "FileLister.h"
-#include "FileList.h"
+#include "LicenseReader.h"
 using namespace std;
 using namespace log4cplus;
 
@@ -17,10 +16,8 @@ int InitProgram()
 	InitLogSystem();
 	_CrtSetDebugFillThreshold(0);
 
-	//auto usb = FileLister::list_usb(L'H');
-	FileList list(L"flist.csf");
-	//list.writeFile();
-	list.readFileList();
+	LicenseReader reader(LicenseReader::LicenseType::LOG4CPLUS);
+	char* data = (char*)reader.lockResource();
 	return 0;
 }
 

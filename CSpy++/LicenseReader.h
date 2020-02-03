@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "resource.h"
 
-class LicenseReader
+class LicenseReader final
 {
 public:
 	enum class LicenseType : uint16_t {
@@ -17,13 +17,11 @@ public:
 	};
 
 	LicenseReader(LicenseType licenseType);
+	~LicenseReader();
 
 	void* lockResource();
-	void* getResource();
-	void releaseResoure();
 
-protected:
+private:
 	void* hResource = nullptr;
-	void* resourceMemory = nullptr;
 };
 

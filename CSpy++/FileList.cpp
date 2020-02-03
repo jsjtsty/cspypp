@@ -9,7 +9,7 @@ namespace {
 		FILETIME creationTime, lastAccessTime, lastWriteTime;
 		uint32_t fileAttributes;
 		uint64_t fileSize;
-		wchar_t fileName[260] = { 0 }, filePath[260] = { 0 };
+		wchar_t fileName[260] = { 0 };
 		GUID guid;
 		uint32_t father;
 	};
@@ -22,7 +22,6 @@ namespace {
 		nd.fileAttributes = node->getFileAttributes();
 		nd.fileSize = node->getFileSize();
 		wcscpy_s(nd.fileName, node->getFileName().c_str());
-		wcscpy_s(nd.filePath, node->getPath().c_str());
 		nd.guid = node->getGUID();
 		nd.father = father;
 		return nd;
@@ -96,6 +95,11 @@ uint64_t FileList::getVersion() const noexcept
 
 bool FileList::readFileList()
 {
+	if (directory) {
+		delete directory;
+		directory = nullptr;
+	}
+
 	gzFile file = gzopen_w(path.c_str(), "r");
 	if (!file) {
 		return false;
@@ -132,19 +136,19 @@ bool FileList::readFileList()
 		if (ntemp.fileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 			if (ntemp.father == 0) {
 				directory = new Directory(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-					ntemp.fileSize, ntemp.fileName, ntemp.filePath, ntemp.guid);
+					ntemp.fileSize, ntemp.fileName, ntemp.fileName, ntemp.guid);
 				dirMap[id] = directory;
 			}
 			else {
 				Directory* dir = new Directory(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-					ntemp.fileSize, ntemp.fileName, ntemp.filePath, ntemp.guid);
+					ntemp.fileSize, ntemp.fileName, dirMap[ntemp.father]->getPath() + L'/' + ntemp.fileName, ntemp.guid);
 				dirMap[id] = dir;
 				dirMap[ntemp.father]->addDirectory(dir);
 			}
 		}
 		else {
 			File* fl = new File(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-				ntemp.fileSize, ntemp.fileName, ntemp.filePath, ntemp.guid);
+				ntemp.fileSize, ntemp.fileName, dirMap[ntemp.father]->getPath() + L'/' + ntemp.fileName, ntemp.guid);
 			dirMap[ntemp.father]->addFile(fl);
 		}
 	}
