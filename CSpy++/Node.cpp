@@ -1,4 +1,6 @@
 #include "Node.h"
+#include <Windows.h>
+#include <objbase.h>
 using namespace std;
 
 Node::Node()

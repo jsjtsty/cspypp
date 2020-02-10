@@ -1,7 +1,12 @@
 #include "USBDevice.h"
 #include "StringExt.h"
+
+#ifdef WIN32_LEAN_AND_MEAN
+#undef WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <SetupAPI.h>
+#endif
+
 using namespace std;
 
 #define NUMBER_OF_BUS_TYPE_STRINGS (sizeof(BusTypeStrings) / sizeof(BusTypeStrings[0]))

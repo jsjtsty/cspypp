@@ -1,75 +1,30 @@
-﻿
-#include "framework.h"
+﻿#include "framework.h"
 #include "general.h"
 #include "CSpy++.h"
-#include "ProgramUpdate.h"
-
-#define MAX_LOADSTRING 100
+#include "MainThread.h"
+#include <duilib/UIlib.h>
+#include <base/win32/path_util.h>
+#include "basic_form.h"
+#include <ui_components/ui_components.h>
+#include <ui_components/toast/toast.h>
+#include "SystemInformation.h"
+using namespace nim_comp;
 
 HINSTANCE hInst;
-WCHAR szTitle[MAX_LOADSTRING];
-WCHAR szWindowClass[MAX_LOADSTRING];
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, unsigned int, WPARAM, LPARAM);
-int                 InitProgram();
-int                 HandleCreateMessage(WPARAM wParam, LPARAM lParam);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-					 _In_opt_ HINSTANCE hPrevInstance,
-					 _In_ LPWSTR    lpCmdLine,
-					 _In_ int       nCmdShow)
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPWSTR    lpCmdLine,
+	_In_ int       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDC_CSPY, szWindowClass, MAX_LOADSTRING);
-	MyRegisterClass(hInstance);
+	MainThread thread;
+	thread.RunOnCurrentThreadWithLoop(nbase::MessageLoop::kUIMessageLoop);
 
-	if (!InitInstance (hInstance, nCmdShow))
-	{
-		return FALSE;
-	}
-
-	int initRes = InitProgram();
-	if (initRes) {
-		return initRes;
-	}
-
-	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSPY));
-
-	MSG msg;
-
-	while (GetMessage(&msg, nullptr, 0, 0))
-	{
-		switch (msg.message) {
-		case WM_UPDATE_START:
-			MessageBox(0, L"Update start!", L"Information - CSpy++ 0.0.1", MB_ICONINFORMATION);
-			break;
-		case WM_UPDATE_CHECKEND:
-		{
-			UpdateInformation* info = reinterpret_cast<UpdateInformation*>(msg.wParam);
-			if (!msg.lParam) {
-
-			}
-			else {
-				ProgramUpdate::getInstance()->update();
-			}
-			delete info;
-			break;
-		}
-		default:
-			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-			break;
-		}
-	}
-
-	return (int) msg.wParam;
+	TerminateProcess(GetCurrentProcess(), 0);
+	return 0;
 }
 
 HINSTANCE GetCurrentInstance()
@@ -77,66 +32,22 @@ HINSTANCE GetCurrentInstance()
 	return hInst;
 }
 
-ATOM MyRegisterClass(HINSTANCE hInstance)
+void MainThread::Init()
 {
-	WNDCLASSEXW wcex;
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	wcex.style          = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc    = WndProc;
-	wcex.cbClsExtra     = 0;
-	wcex.cbWndExtra     = 0;
-	wcex.hInstance      = hInstance;
-	wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CSPY));
-	wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CSPY);
-	wcex.lpszClassName  = szWindowClass;
-	wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-	return RegisterClassExW(&wcex);
+	nbase::ThreadManager::RegisterThread(0);
+	std::wstring theme_dir = nbase::win32::GetCurrentModuleDirectory();
+	ui::GlobalManager::Startup(theme_dir + L"resources\\", ui::CreateControlCallback(), false);
+	auto info = SystemInformation::GetCPUInformation();
+	/*
+	BasicForm* form = new BasicForm();
+	form->Create(NULL, L"MainFrame", 0, 0);
+	form->ShowWindow();
+	*/
 }
 
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+void MainThread::Cleanup()
 {
-   hInst = hInstance;
-
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-	  CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-   if (!hWnd)
-   {
-	  return FALSE;
-   }
-
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-
-   return TRUE;
-}
-
-LRESULT CALLBACK WndProc(HWND hWnd, unsigned int message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_CREATE:
-		HandleCreateMessage(wParam, lParam);
-		break;
-	case WM_COMMAND:
-		break;
-	case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(hWnd, &ps);
-			EndPaint(hWnd, &ps);
-		}
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-	return 0;
+	ui::GlobalManager::Shutdown();
+	SetThreadWasQuitProperly(true);
+	nbase::ThreadManager::UnregisterThread();
 }

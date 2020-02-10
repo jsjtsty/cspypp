@@ -3,6 +3,8 @@
 #include <string>
 #include "LogSupport.h"
 #include "LicenseReader.h"
+#include "RSAKey.h"
+#include "basic_form.h"
 using namespace std;
 using namespace log4cplus;
 
@@ -15,9 +17,10 @@ int InitProgram()
 	InitConstants();
 	InitLogSystem();
 	_CrtSetDebugFillThreshold(0);
-
-	LicenseReader reader(LicenseReader::LicenseType::LOG4CPLUS);
-	char* data = (char*)reader.lockResource();
+	BasicForm* window = new BasicForm();
+	window->Create(NULL, BasicForm::kClassName.c_str(), WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX, 0);
+	window->CenterWindow();
+	window->ShowWindow();
 	return 0;
 }
 
