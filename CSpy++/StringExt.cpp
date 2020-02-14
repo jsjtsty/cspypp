@@ -21,76 +21,76 @@ namespace std {
 		return str;
 	}
 
-	u8string wstring_to_utf8string(const wstring& _val)
+	u8string wstring_to_utf8string(const wstring_view& _val)
 	{
 		char* stemp = new char[(_val.length() + 1) * 4];
 		BOOL transformStatus;
-		int res = WideCharToMultiByte(CP_UTF8, 0, _val.c_str(), -1, stemp, (int)((_val.length() + 1) * 4), NULL, &transformStatus);
+		int res = WideCharToMultiByte(CP_UTF8, 0, _val.data(), -1, stemp, (int)((_val.length() + 1) * 4), NULL, &transformStatus);
 		u8string str = stemp;
 		delete[] stemp;
 		return str;
 	}
 
-	wstring to_wstring(const string& _val)
+	wstring to_wstring(const string_view& _val)
 	{
 		wchar_t* stemp = new wchar_t[_val.length() + 1];
-		int res = MultiByteToWideChar(CP_ACP, 0, _val.c_str(), -1, stemp, (int)_val.length() + 1);
+		int res = MultiByteToWideChar(CP_ACP, 0, _val.data(), -1, stemp, (int)_val.length() + 1);
 		wstring str = stemp;
 		delete[] stemp;
 		return str;
 	}
 
-	string to_string(const wstring& _val)
+	string to_string(const wstring_view& _val)
 	{
 		char* stemp = new char[(_val.length() + 1) * 4];
 		BOOL transformStatus;
-		int res = WideCharToMultiByte(CP_ACP, 0, _val.c_str(), -1, stemp, (int)((_val.length() + 1) * 4), NULL, &transformStatus);
+		int res = WideCharToMultiByte(CP_ACP, 0, _val.data(), -1, stemp, (int)((_val.length() + 1) * 4), NULL, &transformStatus);
 		string str = stemp;
 		delete[] stemp;
 		return str;
 	}
 
-	string trim_left(const string& _val)
+	string trim_left(const string_view& _val)
 	{
 		size_t pos = 0;
 		for (auto it = _val.cbegin(); it != _val.cend(); ++it, ++pos) {
 			if (*it != ' ')
 				break;
 		}
-		return _val.substr(pos, _val.length() - pos);
+		return _val.substr(pos, _val.length() - pos).data();
 	}
 
-	string trim_right(const string& _val)
+	string trim_right(const string_view& _val)
 	{
 		size_t pos = _val.length();
 		for (auto it = _val.crbegin(); it != _val.crend(); ++it, --pos) {
 			if (*it != ' ')
 				break;
 		}
-		return _val.substr(0, pos);
+		return _val.substr(0, pos).data();
 	}
 
-	wstring trim_left(const wstring& _val)
+	wstring trim_left(const wstring_view& _val)
 	{
 		size_t pos = 0;
 		for (auto it = _val.cbegin(); it != _val.cend(); ++it, ++pos) {
 			if (*it != L' ')
 				break;
 		}
-		return _val.substr(pos, _val.length() - pos);
+		return _val.substr(pos, _val.length() - pos).data();
 	}
 
-	wstring trim_right(const wstring& _val)
+	wstring trim_right(const wstring_view& _val)
 	{
 		size_t pos = _val.length();
 		for (auto it = _val.crbegin(); it != _val.crend(); ++it, --pos) {
 			if (*it != L' ')
 				break;
 		}
-		return _val.substr(0, pos);
+		return _val.substr(0, pos).data();
 	}
 
-	string trim(const string& _val)
+	string trim(const string_view& _val)
 	{
 		size_t left = 0, right = _val.length();
 		for (auto it = _val.cbegin(); it != _val.cend(); ++it, ++left) {
@@ -101,10 +101,10 @@ namespace std {
 			if (*it != ' ')
 				break;
 		}
-		return _val.substr(left, right - left);
+		return _val.substr(left, right - left).data();
 	}
 
-	wstring trim(const wstring& _val)
+	wstring trim(const wstring_view& _val)
 	{
 		size_t left = 0, right = _val.length();
 		for (auto it = _val.cbegin(); it != _val.cend(); ++it, ++left) {
@@ -115,6 +115,6 @@ namespace std {
 			if (*it != L' ')
 				break;
 		}
-		return _val.substr(left, right - left);
+		return _val.substr(left, right - left).data();
 	}
 }

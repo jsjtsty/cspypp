@@ -120,7 +120,10 @@
     <ClInclude Include="MainThread.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SystemInformation.h">
+    <ClInclude Include="CPUID.h">
+      <Filter>ComputerMonitor</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemVersion.h">
       <Filter>ComputerMonitor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -194,7 +197,10 @@
     <ClCompile Include="basic_form.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SystemInformation.cpp">
+    <ClCompile Include="CPUID.cpp">
+      <Filter>ComputerMonitor</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemVersion.cpp">
       <Filter>ComputerMonitor</Filter>
     </ClCompile>
   </ItemGroup>

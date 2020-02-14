@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="basic_form.h" />
+    <ClInclude Include="CPUID.h" />
     <ClInclude Include="CSpy++.h" />
     <ClInclude Include="Directory.h" />
     <ClInclude Include="File.h" />
@@ -191,7 +192,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RSAKey.h" />
     <ClInclude Include="StringExt.h" />
-    <ClInclude Include="SystemInformation.h" />
+    <ClInclude Include="SystemVersion.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="USBDevice.h" />
@@ -203,6 +204,7 @@
   <ItemGroup>
     <ClCompile Include="basic_form.cpp" />
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="CPUID.cpp" />
     <ClCompile Include="CSpy++.cpp" />
     <ClCompile Include="Dependency.cpp" />
     <ClCompile Include="Directory.cpp" />
@@ -218,7 +220,7 @@
     <ClCompile Include="ProgramUpdate.cpp" />
     <ClCompile Include="RSAKey.cpp" />
     <ClCompile Include="StringExt.cpp" />
-    <ClCompile Include="SystemInformation.cpp" />
+    <ClCompile Include="SystemVersion.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="USBDevice.cpp" />
     <ClCompile Include="USBDirectory.cpp" />

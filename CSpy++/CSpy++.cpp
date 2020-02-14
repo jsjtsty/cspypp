@@ -7,7 +7,7 @@
 #include "basic_form.h"
 #include <ui_components/ui_components.h>
 #include <ui_components/toast/toast.h>
-#include "SystemInformation.h"
+#include "SystemVersion.h"
 using namespace nim_comp;
 
 HINSTANCE hInst;
@@ -37,7 +37,7 @@ void MainThread::Init()
 	nbase::ThreadManager::RegisterThread(0);
 	std::wstring theme_dir = nbase::win32::GetCurrentModuleDirectory();
 	ui::GlobalManager::Startup(theme_dir + L"resources\\", ui::CreateControlCallback(), false);
-	auto info = SystemInformation::GetCPUInformation();
+	
 	/*
 	BasicForm* form = new BasicForm();
 	form->Create(NULL, L"MainFrame", 0, 0);
