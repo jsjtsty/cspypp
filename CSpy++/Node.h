@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <memory>
 #include "Time.h"
+#include <functional>
 
 #ifndef GUID_DEFINED
 #define GUID_DEFINED
@@ -23,41 +24,46 @@ typedef struct _GUID {
 #endif
 #endif
 
+typedef std::function<size_t(const void*, size_t, size_t)> StreamWriterFunction;
+
 class Node
 {
 public:
 	Node();
-	Node(WIN32_FIND_DATA _val, const std::wstring& path);
+	Node(WIN32_FIND_DATA _val, Node* parent = nullptr);
 	Node(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
-		uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID& guid);
-	Node(const void* data);
+		uint64_t fileSize, const std::wstring_view fileName, const GUID& guid, Node* parent = nullptr);
+	Node(const void* data, Node* parent = nullptr);
 
 	virtual bool isDirectory() const noexcept;
 	virtual bool isFile() const noexcept;
 
-	void setData(WIN32_FIND_DATA _val, const std::wstring& path);
-	void setPath(std::wstring_view _val);
+	void setData(WIN32_FIND_DATA _val, Node* parent = nullptr);
 
 	Time getCreationTime() const noexcept;
 	Time getLastAccessTime() const noexcept;
 	Time getLastWriteTime() const noexcept;
-	std::wstring getPath() const noexcept;
+	std::wstring getPath() const;
 	std::wstring getFileName() const noexcept;
 	uint64_t getFileSize() const noexcept;
 	uint32_t getFileAttributes() const noexcept;
 	GUID getGUID() const noexcept;
 	void setGUID(const GUID& rg) noexcept;
 	void setFileAttributes(uint32_t _val) noexcept;
+	void setParent(Node* parent) noexcept;
+	Node* getParent() const noexcept;
 
-	virtual size_t getBinarySize() const;
-	virtual size_t getBinaryData(void* buffer) const;
+	size_t getBinarySize() const;
+	size_t getBinaryData(void* buffer) const;
+	size_t writeBinaryData(StreamWriterFunction WriteStream);
 
 protected:
 	uint32_t fileAttributes = 0;
-	Time creationTime, lastAccessTime, lastWriteTime;
 	uint64_t fileSize = 0;
-	std::wstring fileName, filePath;
+	Time creationTime, lastAccessTime, lastWriteTime;
 	GUID guid;
+	Node* parent;
+	std::wstring fileName;
 };
 
 typedef std::shared_ptr<Node> NodePtr;

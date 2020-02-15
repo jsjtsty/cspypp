@@ -11,9 +11,9 @@ class Directory : public Node
 {
 public:
 	Directory() : Node() {}
-	Directory(WIN32_FIND_DATA _val, const std::wstring& path) : Node(_val, path) {}
+	Directory(WIN32_FIND_DATA _val, Node* parent = nullptr) : Node(_val, parent) {}
 	Directory(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
-		uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID& guid);
+		uint64_t fileSize, const std::wstring_view fileName, const GUID& guid, Node* parent = nullptr);
 	virtual ~Directory();
 
 	virtual bool isDirectory() const noexcept override;
@@ -23,9 +23,9 @@ public:
 	typedef std::vector<File*> FileVector;
 
 	File* addFile(File* file);
-	File* addFile(WIN32_FIND_DATA _val, const std::wstring& path);
+	File* addFile(WIN32_FIND_DATA _val);
 	Directory* addDirectory(Directory* file);
-	Directory* addDirectory(WIN32_FIND_DATA _val, const std::wstring& path);
+	Directory* addDirectory(WIN32_FIND_DATA _val);
 
 	const DirectoryVector& getDirectoryList() const;
 	const FileVector& getFileList() const;

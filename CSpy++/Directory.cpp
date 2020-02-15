@@ -1,8 +1,8 @@
 #include "Directory.h"
 
 Directory::Directory(const Time & creationTime, const Time & lastAccessTime, const Time & lastWriteTime, uint32_t fileAttributes,
-	uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID & guid)
-	: Node(creationTime, lastAccessTime, lastWriteTime, fileAttributes, fileSize, fileName, filePath, guid)
+	uint64_t fileSize, const std::wstring_view fileName, const GUID & guid, Node* parent)
+	: Node(creationTime, lastAccessTime, lastWriteTime, fileAttributes, fileSize, fileName, guid, parent)
 {
 }
 
@@ -33,9 +33,9 @@ File* Directory::addFile(File* file)
 	return file;
 }
 
-File* Directory::addFile(WIN32_FIND_DATA _val, const std::wstring & path)
+File* Directory::addFile(WIN32_FIND_DATA _val)
 {
-	File* file = new File(_val, path);
+	File* file = new File(_val, this);
 	fileList.push_back(file);
 	return file;
 }
@@ -46,9 +46,9 @@ Directory* Directory::addDirectory(Directory* file)
 	return file;
 }
 
-Directory* Directory::addDirectory(WIN32_FIND_DATA _val, const std::wstring& path)
+Directory* Directory::addDirectory(WIN32_FIND_DATA _val)
 {
-	Directory* file = new Directory(_val, path);
+	Directory* file = new Directory(_val, this);
 	directoryList.push_back(file);
 	return file;
 }

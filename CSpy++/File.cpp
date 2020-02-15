@@ -3,8 +3,8 @@
 using namespace std;
 
 File::File(const Time & creationTime, const Time & lastAccessTime, const Time & lastWriteTime, uint32_t fileAttributes,
-	uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID & guid)
-	: Node(creationTime, lastAccessTime, lastWriteTime, fileAttributes, fileSize, fileName, filePath, guid)
+	uint64_t fileSize, const std::wstring_view fileName, const GUID & guid, Node* parent)
+	: Node(creationTime, lastAccessTime, lastWriteTime, fileAttributes, fileSize, fileName, guid, parent)
 {
 }
 

@@ -8,6 +8,7 @@
 #include <ui_components/ui_components.h>
 #include <ui_components/toast/toast.h>
 #include "FileLister.h"
+#include "FileList.h"
 using namespace nim_comp;
 
 HINSTANCE hInst;
@@ -32,6 +33,16 @@ HINSTANCE GetCurrentInstance()
 	return hInst;
 }
 
+void dfs(Directory* dir, FILE* file, std::function<size_t(const void*, size_t, size_t)> fwrite2) {
+	for (File* fl : dir->getFileList()) {
+		fl->writeBinaryData(fwrite2);
+	}
+	for (Directory* d : dir->getDirectoryList()) {
+		d->writeBinaryData(fwrite2);
+		dfs(d, file, fwrite2);
+	}
+}
+
 void MainThread::Init()
 {
 	nbase::ThreadManager::RegisterThread(0);
@@ -41,6 +52,8 @@ void MainThread::Init()
 	Time time1 = Time::getLocalTime();
 	VolumeDirectoryPtr dptr = FileLister::list_volume(L'C');
 	Time time2 = Time::getLocalTime();
+	FileList list = FileList(L"c.csf", dptr.get());
+	list.writeFile();
 	dptr.reset();
 
 	MessageBox(NULL, (time1.toString() + L"\n" + time2.toString()).c_str(), L"Info", MB_ICONINFORMATION);

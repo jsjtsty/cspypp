@@ -6,10 +6,10 @@
 using namespace std;
 
 namespace {
-	Directory* ListDirectory(Directory* directory)
+	Directory* ListDirectory(Directory* directory, wstring path)
 	{
 		WIN32_FIND_DATA findData;
-		wstring findPattern = directory->getPath() + L"/*.*";
+		wstring findPattern = path + L"/*.*";
 		HANDLE hFind = FindFirstFileW(findPattern.c_str(), &findData);
 		if (hFind == INVALID_HANDLE_VALUE) {
 			return directory;
@@ -17,13 +17,13 @@ namespace {
 		do {
 			if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 				if (findData.cFileName[0] != L'.') {
-					Directory* newDir = new Directory(findData, directory->getPath() + L"/" + findData.cFileName);
+					Directory* newDir = new Directory(findData, directory);
 					directory->addDirectory(newDir);
-					ListDirectory(newDir);
+					ListDirectory(newDir, path + L'/' + newDir->getFileName());
 				}
 			}
 			else {
-				File* newFile = new File(findData, directory->getPath() + L"/" + findData.cFileName);
+				File* newFile = new File(findData,directory);
 				directory->addFile(newFile);
 			}
 		} while (FindNextFileW(hFind, &findData));
@@ -67,14 +67,13 @@ namespace FileLister
 				}
 			}
 
-			pDir = make_shared<Directory>(directoryData, directoryPath.data());
+			pDir = make_shared<Directory>(directoryData);
 		}
 		else {
 			pDir = make_shared<Directory>();
-			pDir->setPath(directoryPath);
 		}
 
-		ListDirectory(pDir.get());
+		ListDirectory(pDir.get(), pDir->getFileName());
 
 		return pDir;
 	}
@@ -83,7 +82,7 @@ namespace FileLister
 	{
 		wchar_t path[] = { driveLetter,L':',L'\0' };
 		VolumeDirectoryPtr dir = make_shared<VolumeDirectory>(driveLetter);
-		ListDirectory(dir.get());
+		ListDirectory(dir.get(), dir->getFileName());
 		return dir;
 	}
 
@@ -91,7 +90,7 @@ namespace FileLister
 	{
 		wchar_t path[] = { driveLetter,L':',L'\0' };
 		USBDirectoryPtr dir = make_shared<USBDirectory>(driveLetter);
-		ListDirectory(dir.get());
+		ListDirectory(dir.get(), dir->getFileName());
 		return dir;
 	}
 
@@ -99,7 +98,7 @@ namespace FileLister
 	{
 		wchar_t path[] = { usb.getDriveLetter(),L':',L'\0' };
 		USBDirectoryPtr dir = make_shared<USBDirectory>(usb);
-		ListDirectory(dir.get());
+		ListDirectory(dir.get(), dir->getFileName());
 		return dir;
 	}
 }

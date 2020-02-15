@@ -1,7 +1,7 @@
 #pragma once
 #include "filemanager.h"
 
-constexpr const uint32_t CS_FILELIST_CURVER = 1U;
+constexpr const uint32_t CS_FILELIST_CURVER = 2U;
 
 class FileList
 {

@@ -4,30 +4,6 @@
 #include <map>
 using namespace std;
 
-namespace {
-	struct NodeData {
-		FILETIME creationTime, lastAccessTime, lastWriteTime;
-		uint32_t fileAttributes;
-		uint64_t fileSize;
-		wchar_t fileName[260] = { 0 };
-		GUID guid;
-		uint32_t father;
-	};
-
-	NodeData toNodeData(const Node* node, uint32_t father) {
-		NodeData nd;
-		nd.creationTime = node->getCreationTime().toFileTime();
-		nd.lastAccessTime = node->getLastAccessTime().toFileTime();
-		nd.lastWriteTime = node->getLastWriteTime().toFileTime();
-		nd.fileAttributes = node->getFileAttributes();
-		nd.fileSize = node->getFileSize();
-		wcscpy_s(nd.fileName, node->getFileName().c_str());
-		nd.guid = node->getGUID();
-		nd.father = father;
-		return nd;
-	}
-}
-
 FileList::FileList(const std::wstring_view path)
 {
 	this->path = path.data();
@@ -92,7 +68,7 @@ uint64_t FileList::getVersion() const noexcept
 {
 	return version;
 }
-
+#if 0
 bool FileList::readFileList()
 {
 	if (directory) {
@@ -156,7 +132,7 @@ bool FileList::readFileList()
 	gzclose_w(file);
 	return true;
 }
-
+#endif
 bool FileList::writeFile() const
 {
 	if (!directory) {
@@ -191,18 +167,16 @@ bool FileList::writeFile() const
 	queue<pair<Directory*, uint32_t>> dir;
 	dir.push({ directory, 1 });
 	uint32_t id = 1, curid = 0;
-	NodeData ndata = toNodeData(directory, 0);
-	gzfwrite(&ndata, sizeof(ndata), 1, file);
+	auto gzfwrite2 = std::bind(gzfwrite, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, file);
+	directory->writeBinaryData(gzfwrite2);
 	while(!dir.empty()) {
 		for (File* fl : dir.front().first->getFileList()) {
 			++id;
-			ndata = toNodeData(fl, dir.front().second);
-			gzfwrite(&ndata, sizeof(ndata), 1, file);
+			fl->writeBinaryData(gzfwrite2);
 		}
 		for (Directory* dl : dir.front().first->getDirectoryList()) {
 			++id;
-			ndata = ndata = toNodeData(dl, dir.front().second);
-			gzfwrite(&ndata, sizeof(ndata), 1, file);
+			dl->writeBinaryData(gzfwrite2);
 			dir.push({ dl,id });
 		}
 		dir.pop();
