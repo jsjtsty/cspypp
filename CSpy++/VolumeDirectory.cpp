@@ -8,7 +8,7 @@ VolumeDirectory::VolumeDirectory(wchar_t driveLetter) : Volume(driveLetter) , Di
 {
 	wchar_t path[3] = { driveLetter,L':',L'\0' };
 	this->filePath = path;
-	wcscpy_s(this->fileName, path);
+	this->fileName = path;
 	this->fileAttributes |= FILE_ATTRIBUTE_DIRECTORY;
 }
 
@@ -16,7 +16,7 @@ VolumeDirectory::VolumeDirectory(const Volume& volume) : Volume(volume), Directo
 {
 	wchar_t path[3] = { driveLetter,L':',L'\0' };
 	this->filePath = path;
-	wcscpy_s(this->fileName, path);
+	this->fileName = path;
 	this->fileAttributes |= FILE_ATTRIBUTE_DIRECTORY;
 }
 

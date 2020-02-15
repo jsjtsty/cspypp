@@ -10,7 +10,7 @@ public:
 	Time() {}
 	Time(const SYSTEMTIME& _val, bool local = false);
 	Time(const FILETIME& _val, bool local = false);
-	Time(uint16_t year, uint16_t month, uint16_t day, uint16_t hour, uint16_t minute, uint16_t second, uint16_t milliseconds = 0);
+	Time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t milliseconds = 0);
 	
 	SYSTEMTIME toSystemTime() const;
 	SYSTEMTIME toLocalSystemTime() const;
@@ -34,11 +34,11 @@ public:
 	uint16_t getMilliseconds() const noexcept;
 
 	void setYear(uint16_t _val);
-	void setMonth(uint16_t _val);
-	void setDay(uint16_t _val);
-	void setHour(uint16_t _val);
-	void setMinute(uint16_t _val);
-	void setSecond(uint16_t _val);
+	void setMonth(uint8_t _val);
+	void setDay(uint8_t _val);
+	void setHour(uint8_t _val);
+	void setMinute(uint8_t _val);
+	void setSecond(uint8_t _val);
 	void setMilliseconds(uint16_t _val);
 	void setTime(FILETIME _val, bool local = false);
 	void setTime(SYSTEMTIME _val, bool local = false);
@@ -58,8 +58,8 @@ public:
 	static bool isLeapYear(uint16_t year);
 
 protected:
-	uint16_t year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0, milliseconds = 0;
-	uint16_t dayOfWeek = 0;
+	uint16_t year = 0, milliseconds = 0;
+	uint8_t month = 0, day = 0, hour = 0, minute = 0, second = 0, dayOfWeek = 0;
 };
 
 class TimeError : public std::logic_error

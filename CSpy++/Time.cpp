@@ -9,9 +9,9 @@ Time::Time(const SYSTEMTIME & _val, bool local)
 		GetTimeZoneInformation(&info);
 		TzSpecificLocalTimeToSystemTime(&info, &_val, &st);
 	}
-	year = st.wYear; month = st.wMonth; day = st.wDay;
-	dayOfWeek = st.wDayOfWeek; hour = st.wHour; minute = st.wMinute;
-	second = st.wSecond; milliseconds = st.wMilliseconds;
+	year = st.wYear; month = (uint8_t)st.wMonth; day = (uint8_t)st.wDay;
+	dayOfWeek = (uint8_t)st.wDayOfWeek; hour = (uint8_t)st.wHour; minute = (uint8_t)st.wMinute;
+	second = (uint8_t)st.wSecond; milliseconds = st.wMilliseconds;
 }
 
 Time::Time(const FILETIME & _val, bool local)
@@ -27,14 +27,14 @@ Time::Time(const FILETIME & _val, bool local)
 	else {
 		FileTimeToSystemTime(&_val, &st);
 	}
-	year = st.wYear; month = st.wMonth; day = st.wDay;
-	dayOfWeek = st.wDayOfWeek; hour = st.wHour; minute = st.wMinute;
-	second = st.wSecond; milliseconds = st.wMilliseconds;
+	year = st.wYear; month = (uint8_t)st.wMonth; day = (uint8_t)st.wDay;
+	dayOfWeek = (uint8_t)st.wDayOfWeek; hour = (uint8_t)st.wHour; minute = (uint8_t)st.wMinute;
+	second = (uint8_t)st.wSecond; milliseconds = st.wMilliseconds;
 }
 
-Time::Time(uint16_t year, uint16_t month, uint16_t day, uint16_t hour, uint16_t minute, uint16_t second, uint16_t milliseconds)
+Time::Time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t milliseconds)
 {
-		bool valid = true;
+	bool valid = true;
 	uint16_t dayOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 	if (isLeapYear(year)) {
 		dayOfMonth[1] = 29;
@@ -134,7 +134,7 @@ string Time::toANSIString(bool local) const
 
 wstring Time::format(const wstring& _format) const
 {
-		constexpr const wchar_t* const week[7] = { L"Sunday",L"Monday",L"Tuesday",L"Wednesday",L"Thursday",L"Friday",L"Saturday" };
+	constexpr const wchar_t* const week[7] = { L"Sunday",L"Monday",L"Tuesday",L"Wednesday",L"Thursday",L"Friday",L"Saturday" };
 	constexpr const size_t weekLength[7] = { 6,6,7,9,8,6,7 };
 	bool escape = false, escape2 = false;
 	size_t length = 0;
@@ -308,10 +308,13 @@ wstring Time::format(const wstring& _format) const
 			case L'H': case L'M': case L'S':
 			case L'q':
 			{
-				const uint16_t* ptr = nullptr;
+				bool _8bits = true;
+				const uint8_t* ptr = nullptr;
+				const uint16_t* ptr2 = nullptr;
 				switch (*i) {
 				case L'Y':
-					ptr = &year;
+					ptr2 = &year;
+					_8bits = false;
 					break;
 				case L'm':
 					ptr = &month;
@@ -329,15 +332,27 @@ wstring Time::format(const wstring& _format) const
 					ptr = &second;
 					break;
 				case L'q':
-					ptr = &milliseconds;
+					ptr2 = &milliseconds;
+					_8bits = false;
 					break;
 				}
-				int length = static_cast<int>(log10(*ptr)) + 1;
-				uint16_t pn = *ptr;
-				for (int i = length; i > 0; --i) {
-					uint16_t m = static_cast<uint16_t>(pow(10, i - 1));
-					buffer[p++] = L'0' + pn / m;
-					pn %= m;
+				if (_8bits) {
+					int length = static_cast<int>(log10(*ptr)) + 1;
+					uint8_t pn = *ptr;
+					for (int i = length; i > 0; --i) {
+						uint8_t m = static_cast<uint8_t>(pow(10, i - 1));
+						buffer[p++] = L'0' + pn / m;
+						pn %= m;
+					}
+				}
+				else {
+					int length = static_cast<int>(log10(*ptr2)) + 1;
+					uint16_t pn = *ptr;
+					for (int i = length; i > 0; --i) {
+						uint16_t m = static_cast<uint16_t>(pow(10, i - 1));
+						buffer[p++] = L'0' + pn / m;
+						pn %= m;
+					}
 				}
 				break;
 			}
@@ -547,10 +562,13 @@ string Time::format(const string & _format) const
 			case 'H': case 'M': case 'S':
 			case 'q':
 			{
-				const uint16_t* ptr = nullptr;
+				bool _8bits = true;
+				const uint8_t* ptr = nullptr;
+				const uint16_t* ptr2 = nullptr;
 				switch (*i) {
 				case 'Y':
-					ptr = &year;
+					ptr2 = &year;
+					_8bits = false;
 					break;
 				case 'm':
 					ptr = &month;
@@ -568,15 +586,27 @@ string Time::format(const string & _format) const
 					ptr = &second;
 					break;
 				case 'q':
-					ptr = &milliseconds;
+					ptr2 = &milliseconds;
+					_8bits = false;
 					break;
 				}
-				int length = static_cast<int>(log10(*ptr)) + 1;
-				uint16_t pn = *ptr;
-				for (int i = length; i > 0; --i) {
-					uint16_t m = static_cast<uint16_t>(pow(10, i - 1));
-					buffer[p++] = '0' + pn / m;
-					pn %= m;
+				if (_8bits) {
+					int length = static_cast<int>(log10(*ptr)) + 1;
+					uint8_t pn = *ptr;
+					for (int i = length; i > 0; --i) {
+						uint8_t m = static_cast<uint8_t>(pow(10, i - 1));
+						buffer[p++] = L'0' + pn / m;
+						pn %= m;
+					}
+				}
+				else {
+					int length = static_cast<int>(log10(*ptr2)) + 1;
+					uint16_t pn = *ptr;
+					for (int i = length; i > 0; --i) {
+						uint16_t m = static_cast<uint16_t>(pow(10, i - 1));
+						buffer[p++] = L'0' + pn / m;
+						pn %= m;
+					}
 				}
 				break;
 			}
@@ -612,8 +642,9 @@ string Time::format(const string & _format) const
 
 Time& Time::parse(const wstring & str)
 {
-	uint16_t y, mo, d, h, min, s, ms;
-	int res = _snwscanf_s(str.c_str(), str.length(), L"%hu/%hu/%hu %02hu:%02hu:%02hu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
+	uint16_t y, ms;
+	uint8_t mo, d, h, min, s;
+	int res = _snwscanf_s(str.c_str(), str.length(), L"%hu/%hhu/%hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
 	if (res == EOF) {
 		throw TimeError("Unsupported format.");
 		return *this;
@@ -630,8 +661,9 @@ Time& Time::parse(const wstring & str)
 
 Time& Time::parse(const string & str)
 {
-	uint16_t y, mo, d, h, min, s, ms;
-	int res = _snscanf_s(str.c_str(), str.length(), "%hu/%hu/%hu %02hu:%02hu:%02hu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
+	uint16_t y, ms;
+	uint8_t mo, d, h, min, s;
+	int res = _snscanf_s(str.c_str(), str.length(), "%hu/%hhu/%hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
 	if (res == EOF) {
 		throw TimeError("Unsupported format.");
 		return *this;
@@ -720,7 +752,7 @@ void Time::setYear(uint16_t _val)
 	}
 }
 
-void Time::setMonth(uint16_t _val)
+void Time::setMonth(uint8_t _val)
 {
 	if (_val == 0 || _val > 12) {
 		throw TimeError("Invalid month. (month >= 12)");
@@ -730,9 +762,9 @@ void Time::setMonth(uint16_t _val)
 	}
 }
 
-void Time::setDay(uint16_t _val)
+void Time::setDay(uint8_t _val)
 {
-	uint16_t dayOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	uint8_t dayOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 	if (isLeapYear(year))
 		dayOfMonth[1] = 29;
 
@@ -747,7 +779,7 @@ void Time::setDay(uint16_t _val)
 	}
 }
 
-void Time::setHour(uint16_t _val)
+void Time::setHour(uint8_t _val)
 {
 	if (_val >= 24) {
 		throw TimeError("Invalid time. (hour >= 24)");
@@ -757,7 +789,7 @@ void Time::setHour(uint16_t _val)
 	}
 }
 
-void Time::setMinute(uint16_t _val)
+void Time::setMinute(uint8_t _val)
 {
 	if (_val >= 60) {
 		throw TimeError("Invalid time. (minute >= 60)");
@@ -767,7 +799,7 @@ void Time::setMinute(uint16_t _val)
 	}
 }
 
-void Time::setSecond(uint16_t _val)
+void Time::setSecond(uint8_t _val)
 {
 	if (_val >= 60) {
 		throw TimeError("Invalid time. (second >= 60)");
@@ -800,9 +832,9 @@ void Time::setTime(FILETIME _val, bool local)
 	else {
 		FileTimeToSystemTime(&_val, &st);
 	}
-	year = st.wYear; month = st.wMonth; day = st.wDay;
-	dayOfWeek = st.wDayOfWeek; hour = st.wHour; minute = st.wMinute;
-	second = st.wSecond; milliseconds = st.wMilliseconds;
+	year = st.wYear; month = (uint8_t)st.wMonth; day = (uint8_t)st.wDay;
+	dayOfWeek = (uint8_t)st.wDayOfWeek; hour = (uint8_t)st.wHour; minute = (uint8_t)st.wMinute;
+	second = (uint8_t)st.wSecond; milliseconds = st.wMilliseconds;
 }
 
 void Time::setTime(SYSTEMTIME _val, bool local)
@@ -813,9 +845,9 @@ void Time::setTime(SYSTEMTIME _val, bool local)
 		GetTimeZoneInformation(&info);
 		TzSpecificLocalTimeToSystemTime(&info, &_val, &st);
 	}
-	year = st.wYear; month = st.wMonth; day = st.wDay;
-	dayOfWeek = st.wDayOfWeek; hour = st.wHour; minute = st.wMinute;
-	second = st.wSecond; milliseconds = st.wMilliseconds;
+	year = st.wYear; month = (uint8_t)st.wMonth; day = (uint8_t)st.wDay;
+	dayOfWeek = (uint8_t)st.wDayOfWeek; hour = (uint8_t)st.wHour; minute = (uint8_t)st.wMinute;
+	second = (uint8_t)st.wSecond; milliseconds = st.wMilliseconds;
 }
 
 Time::operator FILETIME() const

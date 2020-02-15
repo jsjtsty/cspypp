@@ -7,7 +7,7 @@
 #include "basic_form.h"
 #include <ui_components/ui_components.h>
 #include <ui_components/toast/toast.h>
-#include "SystemVersion.h"
+#include "FileLister.h"
 using namespace nim_comp;
 
 HINSTANCE hInst;
@@ -37,7 +37,14 @@ void MainThread::Init()
 	nbase::ThreadManager::RegisterThread(0);
 	std::wstring theme_dir = nbase::win32::GetCurrentModuleDirectory();
 	ui::GlobalManager::Startup(theme_dir + L"resources\\", ui::CreateControlCallback(), false);
-	
+
+	Time time1 = Time::getLocalTime();
+	VolumeDirectoryPtr dptr = FileLister::list_volume(L'C');
+	Time time2 = Time::getLocalTime();
+	dptr.reset();
+
+	MessageBox(NULL, (time1.toString() + L"\n" + time2.toString()).c_str(), L"Info", MB_ICONINFORMATION);
+
 	/*
 	BasicForm* form = new BasicForm();
 	form->Create(NULL, L"MainFrame", 0, 0);

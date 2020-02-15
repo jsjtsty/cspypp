@@ -15,7 +15,7 @@ Node::Node(WIN32_FIND_DATA _val, const wstring& path)
 	lastAccessTime.setTime(_val.ftLastAccessTime, false);
 	lastWriteTime.setTime(_val.ftLastWriteTime, false);
 	fileSize = ((uint64_t)(_val.nFileSizeHigh) << 32) | _val.nFileSizeLow;
-	wcscpy_s(fileName, 260, _val.cFileName);
+	fileName = _val.cFileName;
 	filePath = path;
 	CoCreateGuid(&guid);
 }
@@ -23,9 +23,9 @@ Node::Node(WIN32_FIND_DATA _val, const wstring& path)
 Node::Node(const Time & creationTime, const Time & lastAccessTime, const Time & lastWriteTime, uint32_t fileAttributes, 
 	uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID & guid)
 	: creationTime(creationTime), lastAccessTime(lastAccessTime), lastWriteTime(lastWriteTime),
-	fileAttributes(fileAttributes), fileSize(fileSize), filePath(filePath.data()), guid(guid)
+	fileAttributes(fileAttributes), fileSize(fileSize), filePath(filePath.data()), guid(guid), fileName(fileName.data())
 {
-	wcscpy_s(this->fileName, fileName.data());
+	
 }
 
 bool Node::isDirectory() const noexcept
@@ -45,7 +45,7 @@ void Node::setData(WIN32_FIND_DATA _val, const std::wstring & path)
 	lastAccessTime.setTime(_val.ftLastAccessTime, true);
 	lastWriteTime.setTime(_val.ftLastWriteTime, true);
 	fileSize = ((uint64_t)(_val.nFileSizeHigh) << 32) | _val.nFileSizeLow;
-	wcscpy_s(fileName, 260, _val.cFileName);
+	fileName = _val.cFileName;
 	filePath = path;
 }
 
@@ -101,6 +101,18 @@ void Node::setGUID(const GUID& rg) noexcept
 void Node::setFileAttributes(uint32_t _val) noexcept
 {
 	fileAttributes = _val;
+}
+
+size_t Node::getBinarySize() const
+{
+	return size_t();
+}
+
+size_t Node::getBinaryData(void* buffer) const
+{
+	unsigned char* ptr = reinterpret_cast<unsigned char*>(buffer);
+
+	return size_t();
 }
 
 

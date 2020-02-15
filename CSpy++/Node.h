@@ -30,6 +30,7 @@ public:
 	Node(WIN32_FIND_DATA _val, const std::wstring& path);
 	Node(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
 		uint64_t fileSize, const std::wstring_view fileName, const std::wstring_view filePath, const GUID& guid);
+	Node(const void* data);
 
 	virtual bool isDirectory() const noexcept;
 	virtual bool isFile() const noexcept;
@@ -44,17 +45,18 @@ public:
 	std::wstring getFileName() const noexcept;
 	uint64_t getFileSize() const noexcept;
 	uint32_t getFileAttributes() const noexcept;
-
 	GUID getGUID() const noexcept;
 	void setGUID(const GUID& rg) noexcept;
 	void setFileAttributes(uint32_t _val) noexcept;
+
+	virtual size_t getBinarySize() const;
+	virtual size_t getBinaryData(void* buffer) const;
 
 protected:
 	uint32_t fileAttributes = 0;
 	Time creationTime, lastAccessTime, lastWriteTime;
 	uint64_t fileSize = 0;
-	std::wstring filePath;
-	wchar_t fileName[260] = { 0 };
+	std::wstring fileName, filePath;
 	GUID guid;
 };
 
