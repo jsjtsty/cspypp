@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdint>
 #include <memory>
+#include <map>
 #include "Time.h"
 #include <functional>
 
@@ -25,6 +26,7 @@ typedef struct _GUID {
 #endif
 
 typedef std::function<size_t(const void*, size_t, size_t)> StreamWriterFunction;
+typedef std::function<size_t(void*, size_t, size_t)> StreamReaderFunction;
 
 class Node
 {
@@ -33,7 +35,9 @@ public:
 	Node(WIN32_FIND_DATA _val, Node* parent = nullptr);
 	Node(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
 		uint64_t fileSize, const std::wstring_view fileName, const GUID& guid, Node* parent = nullptr);
-	Node(const void* data, Node* parent = nullptr);
+	Node(StreamReaderFunction ReadStream, Node* parent);
+	Node(StreamReaderFunction ReadStream, const std::map<GUID, Node*>& nodeList);
+	Node(const void* data, Node* parent);
 
 	virtual bool isDirectory() const noexcept;
 	virtual bool isFile() const noexcept;

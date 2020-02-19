@@ -36,7 +36,7 @@ namespace FileLister
 {
 	DirectoryPtr list_directory(wstring_view path)
 	{
-		DirectoryPtr pDir = nullptr;
+		DirectoryPtr pDir = make_shared<Directory>();
 
 		WIN32_FIND_DATA directoryData = { 0 };
 		wstring_view directoryPath;
@@ -67,13 +67,10 @@ namespace FileLister
 				}
 			}
 
-			pDir = make_shared<Directory>(directoryData);
+			pDir->setData(directoryData);
 		}
-		else {
-			pDir = make_shared<Directory>();
-		}
-
-		ListDirectory(pDir.get(), pDir->getFileName());
+		
+		ListDirectory(pDir.get(), path.data());
 
 		return pDir;
 	}

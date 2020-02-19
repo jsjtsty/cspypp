@@ -14,6 +14,9 @@ public:
 	Directory(WIN32_FIND_DATA _val, Node* parent = nullptr) : Node(_val, parent) {}
 	Directory(const Time& creationTime, const Time& lastAccessTime, const Time& lastWriteTime, uint32_t fileAttributes,
 		uint64_t fileSize, const std::wstring_view fileName, const GUID& guid, Node* parent = nullptr);
+	Directory(StreamReaderFunction ReadStream, Node* parent) : Node(ReadStream, parent) {}
+	Directory(const void* data, Node* parent) : Node(data, parent) {}
+
 	virtual ~Directory();
 
 	virtual bool isDirectory() const noexcept override;

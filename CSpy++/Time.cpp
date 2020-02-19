@@ -34,41 +34,18 @@ Time::Time(const FILETIME & _val, bool local)
 
 Time::Time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t milliseconds)
 {
-	bool valid = true;
 	uint16_t dayOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 	if (isLeapYear(year)) {
 		dayOfMonth[1] = 29;
-	}
-
-	if (year == 0 || month == 0 || month >= 13 || day == 0 || day > dayOfMonth[month - 1]) {
-		valid = false;
-	}
-	if (hour >= 24 || minute >= 60 || second >= 60 || milliseconds >= 1000) {
-		valid = false;
-	}
-	if (year == 1582 && month == 10 && day >= 5 && day <= 14) {
-		valid = false;
-	}
-	if (!valid) {
-		throw TimeError("Invalid time.");
 	}
 
 	this->year = year; this->month = month; this->day = day;
 	this->hour = hour; this->minute = minute; this->second = second;
 	this->milliseconds = milliseconds;
 
-		int y = year, m = month, d = day, c = year / 100;
-	bool newFormula = true;
-	if (year < 1582 || (year == 1582 && month <= 9) || (year == 1582 && month == 10 && day <= 4)) {
-		newFormula = false;
-	}
+	int y = year, m = month, d = day, c = year / 100;
 
-	if (newFormula) {
-		dayOfWeek = (c / 4 - 2 * c + y + y / 4 + (m + 1) * 13 / 5 + d - 1) % 7;
-	}
-	else {
-		dayOfWeek = (y + y / 4 + c / 4 - 2 * c + 13 * (m + 1) / 5 + d + 3) % 7;
-	}
+	dayOfWeek = (c / 4 - 2 * c + y + y / 4 + (m + 1) * 13 / 5 + d - 1) % 7;
 }
 
 SYSTEMTIME Time::toSystemTime() const
@@ -698,12 +675,7 @@ bool Time::isLeapYear(uint16_t year)
 		return false;
 	}
 	else {
-		if (year > 1582 && year % 100 == 0 && year % 400 != 0) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return true;
 	}
 }
 
@@ -768,10 +740,7 @@ void Time::setDay(uint8_t _val)
 	if (isLeapYear(year))
 		dayOfMonth[1] = 29;
 
-	if (year == 1528 && month == 10 && _val >= 5 && _val <= 14) {
-		throw TimeError("Invalid date. (1582.10.5~14 is not valid)");
-	}
-	else if (_val > dayOfMonth[month - 1]) {
+	if (_val > dayOfMonth[month - 1]) {
 		throw TimeError("Invalid date. (Day does not exist)");
 	}
 	else {

@@ -3,7 +3,7 @@
 #include <objbase.h>
 using namespace std;
 
-Node::Node()
+Node::Node() : parent(nullptr)
 {
 	CoCreateGuid(&guid);
 }
@@ -27,6 +27,53 @@ Node::Node(const Time& creationTime, const Time& lastAccessTime, const Time& las
 	parent(parent)
 {
 
+}
+
+Node::Node(StreamReaderFunction ReadStream, Node* parent)
+{
+	GUID parentGuid;
+	uint16_t size;
+
+	this->parent = parent;
+
+	ReadStream(&fileAttributes, sizeof(uint32_t), 1);
+	ReadStream(&fileSize, sizeof(uint64_t), 1);
+	ReadStream(&creationTime, sizeof(Time), 1);
+	ReadStream(&lastAccessTime, sizeof(Time), 1);
+	ReadStream(&lastWriteTime, sizeof(Time), 1);
+	ReadStream(&guid, sizeof(GUID), 1);
+	ReadStream(&parentGuid, sizeof(GUID), 1);
+	ReadStream(&size, sizeof(uint16_t), 1);
+
+	wchar_t* buffer = new wchar_t[(size_t)size * 2 + 1];
+	ReadStream(buffer, size * sizeof(wchar_t), 1);
+	buffer[size] = L'\0';
+	fileName = buffer;
+	delete[] buffer;
+}
+
+Node::Node(const void* data, Node* parent)
+{
+	const unsigned char* ptr = reinterpret_cast<const unsigned char*>(data);
+	uint16_t size;
+
+	fileAttributes = *reinterpret_cast<const uint32_t*>(ptr);
+	ptr += sizeof(uint32_t);
+	fileSize = *reinterpret_cast<const uint64_t*>(ptr);
+	ptr += sizeof(uint64_t);
+	creationTime = *reinterpret_cast<const Time*>(ptr);
+	ptr += sizeof(Time);
+	lastAccessTime = *reinterpret_cast<const Time*>(ptr);
+	ptr += sizeof(Time);
+	lastWriteTime = *reinterpret_cast<const Time*>(ptr);
+	ptr += sizeof(Time);
+	guid = *reinterpret_cast<const GUID*>(ptr);
+	ptr += sizeof(GUID);
+	this->parent = parent;
+	ptr += sizeof(GUID);
+	size = *reinterpret_cast<const uint16_t*>(ptr);
+	ptr += sizeof(uint16_t);
+	fileName = wstring(reinterpret_cast<const wchar_t*>(ptr), size);
 }
 
 bool Node::isDirectory() const noexcept
@@ -122,6 +169,11 @@ size_t Node::getBinarySize() const
 size_t Node::getBinaryData(void* buffer) const
 {
 	unsigned char* ptr = reinterpret_cast<unsigned char*>(buffer);
+	GUID parentGuid = { 0,0,0,{0} };
+	if (parent) {
+		parentGuid = parent->guid;
+	}
+
 	*reinterpret_cast<uint32_t*>(ptr) = fileAttributes;
 	ptr += sizeof(uint32_t);
 	*reinterpret_cast<uint64_t*>(ptr) = fileSize;
@@ -134,6 +186,8 @@ size_t Node::getBinaryData(void* buffer) const
 	ptr += sizeof(Time);
 	*reinterpret_cast<GUID*>(ptr) = guid;
 	ptr += sizeof(GUID);
+	*reinterpret_cast<GUID*>(ptr) = parentGuid;
+	ptr += sizeof(GUID);
 	*reinterpret_cast<uint16_t*>(ptr) = (uint16_t)fileName.size();
 	ptr += sizeof(uint16_t);
 	memcpy(ptr, fileName.c_str(), fileName.size() * 2);
@@ -143,6 +197,10 @@ size_t Node::getBinaryData(void* buffer) const
 size_t Node::writeBinaryData(StreamWriterFunction WriteStream)
 {
 	uint16_t size = (uint16_t)fileName.size();
+	GUID parentGuid = { 0,0,0,{0} };
+	if (parent) {
+		parentGuid = parent->guid;
+	}
 
 	WriteStream(&fileAttributes, sizeof(uint32_t), 1);
 	WriteStream(&fileSize, sizeof(uint64_t), 1);
@@ -150,6 +208,7 @@ size_t Node::writeBinaryData(StreamWriterFunction WriteStream)
 	WriteStream(&lastAccessTime, sizeof(Time), 1);
 	WriteStream(&lastWriteTime, sizeof(Time), 1);
 	WriteStream(&guid, sizeof(GUID), 1);
+	WriteStream(&parentGuid, sizeof(GUID), 1);
 	WriteStream(&size, sizeof(uint16_t), 1);
 	WriteStream(fileName.c_str(), (size_t)size * 2, 1);
 

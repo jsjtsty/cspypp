@@ -2,6 +2,7 @@
 #include <queue>
 #include <zlib.h>
 #include <map>
+#include "Hasher.h"
 using namespace std;
 
 FileList::FileList(const std::wstring_view path)
@@ -68,7 +69,7 @@ uint64_t FileList::getVersion() const noexcept
 {
 	return version;
 }
-#if 0
+
 bool FileList::readFileList()
 {
 	if (directory) {
@@ -81,9 +82,9 @@ bool FileList::readFileList()
 		return false;
 	}
 
-	wchar_t fileType[32] = { 0 };
-	gzfread(fileType, 32 * sizeof(wchar_t), 1, file);
-	if (wcscmp(fileType, L"CSpy++ FileList (*.csf) File...") != 0) {
+	char fileType[29] = { 0 };
+	gzfread(fileType, 29 * sizeof(char), 1, file);
+	if (strcmp(fileType, "CSpy++ FileList (*.csf) File") != 0) {
 		gzclose_w(file);
 		return false;
 	}
@@ -104,35 +105,17 @@ bool FileList::readFileList()
 		additionalHeader = nullptr;
 	}
 
-	NodeData ntemp;
-	map<uint32_t, Directory*> dirMap;
-	uint32_t id = 0;
-	while (gzfread(&ntemp, sizeof(ntemp), 1, file)) {
-		++id;
-		if (ntemp.fileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-			if (ntemp.father == 0) {
-				directory = new Directory(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-					ntemp.fileSize, ntemp.fileName, ntemp.fileName, ntemp.guid);
-				dirMap[id] = directory;
-			}
-			else {
-				Directory* dir = new Directory(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-					ntemp.fileSize, ntemp.fileName, dirMap[ntemp.father]->getPath() + L'/' + ntemp.fileName, ntemp.guid);
-				dirMap[id] = dir;
-				dirMap[ntemp.father]->addDirectory(dir);
-			}
-		}
-		else {
-			File* fl = new File(ntemp.creationTime, ntemp.lastAccessTime, ntemp.lastWriteTime, ntemp.fileAttributes,
-				ntemp.fileSize, ntemp.fileName, dirMap[ntemp.father]->getPath() + L'/' + ntemp.fileName, ntemp.guid);
-			dirMap[ntemp.father]->addFile(fl);
-		}
+	map<GUID, Directory*> dirMap;
+	auto gzfread2 = std::bind(gzfread, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, file);
+
+	while (!gzeof(file)) {
+		Node node(gzfread2,)
 	}
 
 	gzclose_w(file);
 	return true;
 }
-#endif
+
 bool FileList::writeFile() const
 {
 	if (!directory) {
@@ -145,8 +128,8 @@ bool FileList::writeFile() const
 	}
 
 	// 1. Write file type.
-	const wchar_t* fileType = L"CSpy++ FileList (*.csf) File...";
-	gzfwrite(fileType, 32 * sizeof(wchar_t), 1, file);
+	const char* fileType = "CSpy++ FileList (*.csf) File";
+	gzfwrite(fileType, 29 * sizeof(char), 1, file);
 
 	// 2. Write version information.
 	gzfwrite(&version, sizeof(version), 1, file);
@@ -167,15 +150,14 @@ bool FileList::writeFile() const
 	queue<pair<Directory*, uint32_t>> dir;
 	dir.push({ directory, 1 });
 	uint32_t id = 1, curid = 0;
+	Hash hash;
 	auto gzfwrite2 = std::bind(gzfwrite, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, file);
 	directory->writeBinaryData(gzfwrite2);
 	while(!dir.empty()) {
 		for (File* fl : dir.front().first->getFileList()) {
-			++id;
 			fl->writeBinaryData(gzfwrite2);
 		}
 		for (Directory* dl : dir.front().first->getDirectoryList()) {
-			++id;
 			dl->writeBinaryData(gzfwrite2);
 			dir.push({ dl,id });
 		}
