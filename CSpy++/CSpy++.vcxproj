@@ -181,6 +181,7 @@
     <ClInclude Include="filemanager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="general.h" />
+    <ClInclude Include="GuidExt.h" />
     <ClInclude Include="Hash.h" />
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="JsonExt.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileList.cpp" />
     <ClCompile Include="FileLister.cpp" />
+    <ClCompile Include="GuidExt.cpp" />
     <ClCompile Include="Hash.cpp" />
     <ClCompile Include="Hasher.cpp" />
     <ClCompile Include="Initialization.cpp" />

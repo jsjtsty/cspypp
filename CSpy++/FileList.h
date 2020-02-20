@@ -36,7 +36,7 @@ public:
 
 protected:
 	DirectoryType type;
-	Directory* directory;
+	Directory* directory = nullptr;
 	std::wstring path;
 	void* additionalHeader = nullptr;
 	uint64_t headerSize;

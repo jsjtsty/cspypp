@@ -49,16 +49,13 @@ void MainThread::Init()
 	std::wstring theme_dir = nbase::win32::GetCurrentModuleDirectory();
 	ui::GlobalManager::Startup(theme_dir + L"resources\\", ui::CreateControlCallback(), false);
 
-	DirectoryPtr dptr = FileLister::list_directory(L"G:/备份");
-	FileList list = FileList(L"CJC_20200215.csf", dptr.get());
+	VolumeDirectoryPtr dptr = FileLister::list_volume(L'R');
+	FileList list = FileList(L"F:/R.csf", dptr.get());
 	list.writeFile();
-	dptr.reset();
-
-	/*
-	BasicForm* form = new BasicForm();
-	form->Create(NULL, L"MainFrame", 0, 0);
-	form->ShowWindow();
-	*/
+	FileList list2(L"F:/R.csf");
+	list2.readFileList();
+	Directory* dir = list2.getDirectory();
+	Volume* vol = (Volume*)list2.getAdditionalHeader();
 }
 
 void MainThread::Cleanup()

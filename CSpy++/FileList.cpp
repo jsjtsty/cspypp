@@ -105,11 +105,29 @@ bool FileList::readFileList()
 		additionalHeader = nullptr;
 	}
 
-	map<GUID, Directory*> dirMap;
+	DirectoryList nodeList;
 	auto gzfread2 = std::bind(gzfread, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, file);
+	Node temp;
 
-	while (!gzeof(file)) {
-		Node node(gzfread2,)
+	while (true) {
+		if (!temp.readBinaryData(gzfread2, nodeList)) {
+			break;
+		}
+		
+		if (temp.isDirectory()) {
+			Directory* dir = new Directory(temp);
+			nodeList[dir->getGUID()] = dir;
+			if (dir->getParent()) {
+				dir->getParent()->addDirectory(dir);
+			}
+			else {
+				directory = dir;
+			}
+		}
+		else {
+			File* file = new File(temp);
+			file->getParent()->addFile(file);
+		}
 	}
 
 	gzclose_w(file);
