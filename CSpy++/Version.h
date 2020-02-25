@@ -6,7 +6,7 @@
 class Version
 {
 public:
-	enum class PreviewType : unsigned int {
+	enum class PreviewType : uint32_t {
 		UNKNOWN,
 		RELEASE,
 		TECHNICAL_PREVIEW,
@@ -16,7 +16,7 @@ public:
 	};
 
 	struct Package {
-		bool available;
+		bool available = false;
 		std::wstring href;
 		Hash sha256;
 	};
@@ -54,6 +54,10 @@ public:
 	void setDescription(const std::wstring _val);
 	std::wstring getDescription() const;
 
+	size_t getBinarySize() const;
+	size_t getBinaryData(void* buffer) const;
+	bool readBinaryData(const void* buffer);
+
 	bool operator==(const Version& ver) const;
 	bool operator<(const Version& ver) const;
 	bool operator<=(const Version& ver) const;
@@ -62,7 +66,7 @@ public:
 
 	static Version currentVersion;
 protected:
-	unsigned int major, minor, fix, build;
+	uint32_t major, minor, fix, build;
 	PreviewType previewType;
 	std::wstring description;
 	Package package, package64;

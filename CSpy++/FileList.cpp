@@ -3,6 +3,7 @@
 #include <zlib.h>
 #include <map>
 #include "Hasher.h"
+#include "Version.h"
 using namespace std;
 
 FileList::FileList(const std::wstring_view path)
@@ -12,6 +13,7 @@ FileList::FileList(const std::wstring_view path)
 	this->type = DirectoryType::UNKNOWN;
 	this->headerSize = 0;
 	this->additionalHeader = nullptr;
+	this->clientVersion = Version::currentVersion;
 }
 
 FileList::FileList(const std::wstring_view path, Directory* dir)
@@ -21,6 +23,7 @@ FileList::FileList(const std::wstring_view path, Directory* dir)
 	this->type = DirectoryType::DIRECTORY;
 	this->headerSize = 0;
 	this->additionalHeader = nullptr;
+	this->clientVersion = Version::currentVersion;
 }
 
 FileList::FileList(const std::wstring_view path, Directory* dir, void* additionalHeader, size_t size)
@@ -31,6 +34,7 @@ FileList::FileList(const std::wstring_view path, Directory* dir, void* additiona
 	this->headerSize = size;
 	this->additionalHeader = malloc(this->headerSize);
 	memcpy_s(this->additionalHeader, size, additionalHeader, size);
+	this->clientVersion = Version::currentVersion;
 }
 
 FileList::FileList(const std::wstring_view path, VolumeDirectory* dir)
@@ -41,6 +45,7 @@ FileList::FileList(const std::wstring_view path, VolumeDirectory* dir)
 	this->headerSize = sizeof(Volume);
 	this->additionalHeader = malloc(sizeof(Volume));
 	Volume temp = *dir;
+	this->clientVersion = Version::currentVersion;
 	memcpy_s(this->additionalHeader, sizeof(Volume), &temp, sizeof(Volume));
 }
 
@@ -52,6 +57,7 @@ FileList::FileList(const std::wstring_view path, USBDirectory* dir)
 	this->additionalHeader = malloc(sizeof(USBDevice));
 	this->headerSize = sizeof(USBDevice);
 	USBDevice temp = *dir;
+	this->clientVersion = Version::currentVersion;
 	memcpy_s(this->additionalHeader, sizeof(USBDevice), &temp, sizeof(USBDevice));
 }
 
@@ -78,6 +84,8 @@ bool FileList::readFileList()
 	}
 
 	gzFile file = gzopen_w(path.c_str(), "r");
+	uint32_t bfsize;
+	void* buffer;
 	if (!file) {
 		return false;
 	}
@@ -90,6 +98,13 @@ bool FileList::readFileList()
 	}
 
 	gzfread(&version, sizeof(version), 1, file);
+	gzfread(&bfsize, sizeof(uint32_t), 1, file);
+	buffer = malloc(bfsize);
+	if (!clientVersion.readBinaryData(buffer)) {
+		return false;
+	}
+	free(buffer);
+
 	gzfread(&type, sizeof(type), 1, file);
 	gzfread(&headerSize, sizeof(headerSize), 1, file);
 
@@ -116,7 +131,7 @@ bool FileList::readFileList()
 		
 		if (temp.isDirectory()) {
 			Directory* dir = new Directory(temp);
-			nodeList[dir->getGUID()] = dir;
+			nodeList[dir->getGuid()] = dir;
 			if (dir->getParent()) {
 				dir->getParent()->addDirectory(dir);
 			}
@@ -140,6 +155,8 @@ bool FileList::writeFile() const
 		return false;
 	}
 
+	uint32_t bfsize;
+	void* buffer;
 	gzFile file = gzopen_w(path.c_str(), "w");
 	if (!file) {
 		return false;
@@ -151,7 +168,13 @@ bool FileList::writeFile() const
 
 	// 2. Write version information.
 	gzfwrite(&version, sizeof(version), 1, file);
-
+	bfsize = (uint32_t)Version::currentVersion.getBinarySize();
+	buffer = malloc(bfsize);
+	Version::currentVersion.getBinaryData(buffer);
+	gzfwrite(&bfsize, sizeof(uint32_t), 1, file);
+	gzfwrite(buffer, bfsize, 1, file);
+	free(buffer);
+	
 	// 3. Write addtional header type.
 	uint32_t headerType = (uint32_t)this->type;
 	gzfwrite(&headerType, sizeof(headerType), 1, file);
@@ -165,19 +188,18 @@ bool FileList::writeFile() const
 	}
 
 	// 6. Write file list.
-	queue<pair<Directory*, uint32_t>> dir;
-	dir.push({ directory, 1 });
-	uint32_t id = 1, curid = 0;
+	queue<Directory*> dir;
+	dir.push(directory);
 	Hash hash;
 	auto gzfwrite2 = std::bind(gzfwrite, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, file);
 	directory->writeBinaryData(gzfwrite2);
 	while(!dir.empty()) {
-		for (File* fl : dir.front().first->getFileList()) {
+		for (File* fl : dir.front()->getFileList()) {
 			fl->writeBinaryData(gzfwrite2);
 		}
-		for (Directory* dl : dir.front().first->getDirectoryList()) {
+		for (Directory* dl : dir.front()->getDirectoryList()) {
 			dl->writeBinaryData(gzfwrite2);
-			dir.push({ dl,id });
+			dir.push(dl);
 		}
 		dir.pop();
 	}

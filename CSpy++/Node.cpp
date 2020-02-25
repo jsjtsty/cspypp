@@ -90,12 +90,12 @@ uint32_t Node::getFileAttributes() const noexcept {
 	return fileAttributes;
 }
 
-GUID Node::getGUID() const noexcept
+GUID Node::getGuid() const noexcept
 {
 	return guid;
 }
 
-void Node::setGUID(const GUID& rg) noexcept
+void Node::setGuid(const GUID& rg) noexcept
 {
 	guid = rg;
 }

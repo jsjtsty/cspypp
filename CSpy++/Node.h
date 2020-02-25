@@ -33,8 +33,8 @@ public:
 	std::wstring getFileName() const noexcept;
 	uint64_t getFileSize() const noexcept;
 	uint32_t getFileAttributes() const noexcept;
-	GUID getGUID() const noexcept;
-	void setGUID(const GUID& rg) noexcept;
+	GUID getGuid() const noexcept;
+	void setGuid(const GUID& rg) noexcept;
 	void setFileAttributes(uint32_t _val) noexcept;
 	void setParent(Directory* parent) noexcept;
 	Directory* getParent() const noexcept;

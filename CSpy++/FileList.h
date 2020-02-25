@@ -1,7 +1,8 @@
 #pragma once
 #include "filemanager.h"
+#include "Version.h"
 
-constexpr const uint32_t CS_FILELIST_CURVER = 4U;
+constexpr const uint32_t CS_FILELIST_CURVER = 5U;
 
 class FileList
 {
@@ -37,6 +38,7 @@ public:
 protected:
 	DirectoryType type;
 	Directory* directory = nullptr;
+	Version clientVersion;
 	std::wstring path;
 	void* additionalHeader = nullptr;
 	uint64_t headerSize;

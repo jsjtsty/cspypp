@@ -189,6 +189,7 @@
     <ClInclude Include="LogSupport.h" />
     <ClInclude Include="MainThread.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Plugin.h" />
     <ClInclude Include="ProgramUpdate.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RSAKey.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="JsonExt.cpp" />
     <ClCompile Include="LicenseReader.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="ProgramUpdate.cpp" />
     <ClCompile Include="RSAKey.cpp" />
     <ClCompile Include="StringExt.cpp" />

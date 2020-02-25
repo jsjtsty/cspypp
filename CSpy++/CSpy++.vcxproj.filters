@@ -37,6 +37,9 @@
     <Filter Include="ComputerMonitor">
       <UniqueIdentifier>{32c60560-8a33-42c6-a559-e69a84ebe643}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin">
+      <UniqueIdentifier>{e07099ae-1b69-4132-846c-e78c798988f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -129,6 +132,9 @@
     <ClInclude Include="GuidExt.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="Plugin.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
@@ -208,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="GuidExt.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin.cpp">
+      <Filter>Plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
