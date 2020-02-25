@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -188,6 +188,7 @@
     <ClInclude Include="LicenseReader.h" />
     <ClInclude Include="LogSupport.h" />
     <ClInclude Include="MainThread.h" />
+    <ClInclude Include="MonitorConfig.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="ProgramUpdate.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Initialization.cpp" />
     <ClCompile Include="JsonExt.cpp" />
     <ClCompile Include="LicenseReader.cpp" />
+    <ClCompile Include="MonitorConfig.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="ProgramUpdate.cpp" />

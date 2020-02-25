@@ -12,9 +12,19 @@ public:
 	virtual bool init();
 	virtual bool free();
 
+	uint32_t getProtrolVersion();
+	uint32_t getVersion();
+	Time getReleaseTime();
+	std::wstring getPath();
+	std::wstring getName();
+	std::wstring getVersionName();
+	std::wstring getCompanyName();
+
 protected:
+	bool isInfoLoaded = false;
 	uint32_t protrolVersion, version;
 	std::wstring path, pluginName, versionName, companyName;
 	Time releaseTime;
+	void* hLibrary;
 };
 
