@@ -171,10 +171,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArgParser.h" />
     <ClInclude Include="basic_form.h" />
     <ClInclude Include="CPUID.h" />
     <ClInclude Include="CSpy++.h" />
     <ClInclude Include="Directory.h" />
+    <ClInclude Include="ExtendConfig.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileList.h" />
     <ClInclude Include="FileLister.h" />
@@ -205,12 +207,15 @@
     <ClInclude Include="VolumeDirectory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArgParser.cpp" />
     <ClCompile Include="basic_form.cpp" />
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="CPUID.cpp" />
     <ClCompile Include="CSpy++.cpp" />
     <ClCompile Include="Dependency.cpp" />
     <ClCompile Include="Directory.cpp" />
+    <ClCompile Include="ExtendConfig.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileList.cpp" />
     <ClCompile Include="FileLister.cpp" />

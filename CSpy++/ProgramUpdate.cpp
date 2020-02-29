@@ -262,7 +262,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 		}
 		ifs.close();
 
-				if (!value.isMember("minimumVersion")) {
+		if (!value.isMember("minimumVersion")) {
 			info.code = CS_UPDATE_INVALID_CFGFILE;
 			return info;
 		}
@@ -323,7 +323,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 			continue;
 		}
 
-				if (value.isMember("href")) {
+		if (value.isMember("href")) {
 			auto& href = value["href"];
 			if (href.isObject()) {
 				if (href.isMember("enabled") && href.isMember("destination")) {
@@ -340,7 +340,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 			}
 		}
 
-				if (value.isMember("currentVersion")) {
+		if (value.isMember("currentVersion")) {
 			auto& currentVersion = value["currentVersion"];
 			curVerAvail = checkVersion(currentVersion, info, info.currentVersion);
 			if (info.code != CS_UPDATE_OK) {
@@ -348,7 +348,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 			}
 		}
 
-				if (value.isMember("stableVersion")) {
+		if (value.isMember("stableVersion")) {
 			auto& currentVersion = value["stableVersion"];
 			curVerAvail = checkVersion(currentVersion, info, info.stableVersion);
 			if (info.code != CS_UPDATE_OK) {

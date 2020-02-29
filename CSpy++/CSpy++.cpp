@@ -1,19 +1,14 @@
 ﻿#include "framework.h"
 #include "general.h"
 #include "CSpy++.h"
-#include "MainThread.h"
-#include <duilib/UIlib.h>
-#include <base/win32/path_util.h>
-#include "basic_form.h"
-#include <ui_components/ui_components.h>
-#include <ui_components/toast/toast.h>
-#include "FileLister.h"
-#include "FileList.h"
-using namespace nim_comp;
+#include <Windows.h>
+#include <shellapi.h>
 
 HINSTANCE hInst;
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+int __cdecl CommandLineMain();
+
+int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
@@ -21,8 +16,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	MainThread thread;
-	thread.RunOnCurrentThreadWithLoop(nbase::MessageLoop::kUIMessageLoop);
+	//MainThread thread;
+	//thread.RunOnCurrentThreadWithLoop(nbase::MessageLoop::kUIMessageLoop);
+
+	int res;
+	if (res = CommandLineMain()) {
+		TerminateProcess(GetCurrentProcess(), res);
+		return res;
+	}
 
 	TerminateProcess(GetCurrentProcess(), 0);
 	return 0;
@@ -32,6 +33,8 @@ HINSTANCE GetCurrentInstance()
 {
 	return hInst;
 }
+
+/*
 
 void dfs(Directory* dir, FILE* file, std::function<size_t(const void*, size_t, size_t)> fwrite2) {
 	for (File* fl : dir->getFileList()) {
@@ -64,3 +67,5 @@ void MainThread::Cleanup()
 	SetThreadWasQuitProperly(true);
 	nbase::ThreadManager::UnregisterThread();
 }
+
+*/

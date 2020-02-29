@@ -135,6 +135,15 @@
     <ClInclude Include="Plugin.h">
       <Filter>Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="MonitorConfig.h">
+      <Filter>DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ArgParser.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendConfig.h">
+      <Filter>DataManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
@@ -217,6 +226,18 @@
     </ClCompile>
     <ClCompile Include="Plugin.cpp">
       <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="MonitorConfig.cpp">
+      <Filter>DataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ArgParser.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendConfig.cpp">
+      <Filter>DataManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
