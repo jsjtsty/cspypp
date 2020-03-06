@@ -3,6 +3,7 @@
 #include "CSpy++.h"
 #include <Windows.h>
 #include <shellapi.h>
+#include "Directory.h"
 
 HINSTANCE hInst;
 
@@ -34,7 +35,6 @@ HINSTANCE GetCurrentInstance()
 	return hInst;
 }
 
-/*
 
 void dfs(Directory* dir, FILE* file, std::function<size_t(const void*, size_t, size_t)> fwrite2) {
 	for (File* fl : dir->getFileList()) {
@@ -45,7 +45,7 @@ void dfs(Directory* dir, FILE* file, std::function<size_t(const void*, size_t, s
 		dfs(d, file, fwrite2);
 	}
 }
-
+/*
 void MainThread::Init()
 {
 	nbase::ThreadManager::RegisterThread(0);
@@ -67,5 +67,4 @@ void MainThread::Cleanup()
 	SetThreadWasQuitProperly(true);
 	nbase::ThreadManager::UnregisterThread();
 }
-
 */

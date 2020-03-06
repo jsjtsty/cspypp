@@ -2,15 +2,15 @@
 #include <cstdint>
 #include <string>
 
-class CPUID final
+class CpuId final
 {
 public:
-	CPUID();
-	CPUID(std::string_view vendor, std::string_view brand, int family, uint64_t processorID);
-	CPUID(std::wstring_view vendor, std::wstring_view brand, int family, uint64_t processorID);
-	CPUID(const void* buffer);
+	CpuId();
+	CpuId(std::string_view vendor, std::string_view brand, int family, uint64_t processorID);
+	CpuId(std::wstring_view vendor, std::wstring_view brand, int family, uint64_t processorID);
+	CpuId(const void* buffer);
 
-	static CPUID getCurrentCpuId();
+	static CpuId getCurrentCpuId();
 
 	inline const char* getVendor() const;
 	inline const char* getBrand() const;
@@ -22,8 +22,8 @@ public:
 	inline size_t getBinarySize() const;
 	size_t getBinaryData(void* buffer) const;
 
-	bool operator==(const CPUID& other) const;
-	inline bool operator!=(const CPUID& other) const;
+	bool operator==(const CpuId& other) const;
+	inline bool operator!=(const CpuId& other) const;
 
 private:
 	char vendor[13], brand[49];

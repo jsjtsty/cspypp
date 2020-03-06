@@ -16,7 +16,6 @@ int InitProgram()
 	locale::global(locale("chs"));
 	InitConstants();
 	InitLogSystem();
-	_CrtSetDebugFillThreshold(0);
 	BasicForm* window = new BasicForm();
 	window->Create(NULL, BasicForm::kClassName.c_str(), WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX, 0);
 	window->CenterWindow();

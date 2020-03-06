@@ -3,7 +3,7 @@
 #include <intrin.h>
 using namespace std;
 
-CPUID::CPUID()
+CpuId::CpuId()
 {
 	vendor[0] = 0;
 	brand[0] = 0;
@@ -13,7 +13,7 @@ CPUID::CPUID()
 	processorID = 0ULL;
 }
 
-CPUID::CPUID(string_view vendor, string_view brand, int family, uint64_t processorID) : family(family), processorID(processorID)
+CpuId::CpuId(string_view vendor, string_view brand, int family, uint64_t processorID) : family(family), processorID(processorID)
 {
 	if (vendor.length() <= 12) {
 		strcpy_s(this->vendor, vendor.data());
@@ -32,7 +32,7 @@ CPUID::CPUID(string_view vendor, string_view brand, int family, uint64_t process
 	this->brandLength = (uint8_t)strlen(this->brand);
 }
 
-CPUID::CPUID(wstring_view vendor, wstring_view brand, int family, uint64_t processorID) : family(family), processorID(processorID)
+CpuId::CpuId(wstring_view vendor, wstring_view brand, int family, uint64_t processorID) : family(family), processorID(processorID)
 {
 	string sVendor = to_string(vendor.data()), sBrand = to_string(brand.data());
 	if (sVendor.length() <= 12) {
@@ -54,7 +54,7 @@ CPUID::CPUID(wstring_view vendor, wstring_view brand, int family, uint64_t proce
 	}
 }
 
-CPUID::CPUID(const void* buffer)
+CpuId::CpuId(const void* buffer)
 {
 	const unsigned char* ptr = reinterpret_cast<const unsigned char*>(buffer);
 
@@ -75,9 +75,9 @@ CPUID::CPUID(const void* buffer)
 	processorID = *reinterpret_cast<const decltype(processorID)*>(ptr);
 }
 
-CPUID CPUID::getCurrentCpuId()
+CpuId CpuId::getCurrentCpuId()
 {
-	CPUID cpuid;
+	CpuId cpuid;
 	int32_t buffer[4];
 
 	__cpuid(buffer, 0);
@@ -108,42 +108,42 @@ CPUID CPUID::getCurrentCpuId()
 	return cpuid;
 }
 
-inline const char* CPUID::getVendor() const
+inline const char* CpuId::getVendor() const
 {
 	return vendor;
 }
 
-inline const char* CPUID::getBrand() const
+inline const char* CpuId::getBrand() const
 {
 	return brand;
 }
 
-inline uint8_t CPUID::getVendorLength() const
+inline uint8_t CpuId::getVendorLength() const
 {
 	return vendorLength;
 }
 
-inline uint8_t CPUID::getBrandLength() const
+inline uint8_t CpuId::getBrandLength() const
 {
 	return brandLength;
 }
 
-inline int32_t CPUID::getFamily() const
+inline int32_t CpuId::getFamily() const
 {
 	return family;
 }
 
-inline uint64_t CPUID::getProcessorID() const
+inline uint64_t CpuId::getProcessorID() const
 {
 	return processorID;
 }
 
-inline size_t CPUID::getBinarySize() const
+inline size_t CpuId::getBinarySize() const
 {
 	return sizeof(vendorLength) + sizeof(brandLength) + sizeof(family) + sizeof(processorID) + vendorLength + brandLength;
 }
 
-size_t CPUID::getBinaryData(void* buffer) const
+size_t CpuId::getBinaryData(void* buffer) const
 {
 	unsigned char* ptr = reinterpret_cast<unsigned char*>(buffer);
 
@@ -164,7 +164,7 @@ size_t CPUID::getBinaryData(void* buffer) const
 	return getBinarySize();
 }
 
-bool CPUID::operator==(const CPUID& other) const
+bool CpuId::operator==(const CpuId& other) const
 {
 	if (processorID != other.processorID) {
 		return false;
@@ -187,7 +187,7 @@ bool CPUID::operator==(const CPUID& other) const
 	return true;
 }
 
-inline bool CPUID::operator!=(const CPUID& other) const
+inline bool CpuId::operator!=(const CpuId& other) const
 {
 	return !this->operator==(other);
 }
