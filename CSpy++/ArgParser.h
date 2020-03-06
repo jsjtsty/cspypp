@@ -29,14 +29,14 @@ public:
 	using reverse_iterator = std::set<std::wstring>::reverse_iterator;
 	using const_reverse_iterator = std::set<std::wstring>::const_reverse_iterator;
 
-	inline const_iterator begin() const noexcept;
-	inline const_iterator end() const noexcept;
-	inline const_iterator cbegin() const noexcept;
-	inline const_iterator cend() const noexcept;
-	inline const_reverse_iterator rbegin() const noexcept;
-	inline const_reverse_iterator rend() const noexcept;
-	inline const_reverse_iterator crbegin() const noexcept;
-	inline const_reverse_iterator crend() const noexcept;
+	const_iterator begin() const noexcept;
+	const_iterator end() const noexcept;
+	const_iterator cbegin() const noexcept;
+	const_iterator cend() const noexcept;
+	const_reverse_iterator rbegin() const noexcept;
+	const_reverse_iterator rend() const noexcept;
+	const_reverse_iterator crbegin() const noexcept;
+	const_reverse_iterator crend() const noexcept;
 
 protected:
 	std::set<std::wstring> args;
@@ -46,9 +46,8 @@ class ArgParser
 {
 public:
 	ArgParser() = default;
-	ArgParser(int argc, const wchar_t** argv);
 	
-	bool parse(int argc, const wchar_t** argv);
+	bool parse(int argc, const wchar_t** const argv);
 
 	void setDefault(const Argument& arg, const std::wstring_view val);
 	void setDefault(const std::wstring_view val);
