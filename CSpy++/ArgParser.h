@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <map>
 #include <set>
 #include <string>
@@ -47,18 +48,21 @@ class ArgParser
 public:
 	ArgParser() = default;
 	
-	bool parse(int argc, const wchar_t** const argv);
+	bool parse(int argc, const wchar_t* argv[]);
 
 	void setDefault(const Argument& arg, const std::wstring_view val);
 	void setDefault(const std::wstring_view val);
+	void setDefault(const std::vector<std::wstring>&& val);
+	void setDefault(const std::vector<std::wstring>& val);
 
 	bool hasArg(const Argument& arg) const;
 
 	std::wstring getArg(const Argument& arg) const;
 	std::wstring getArg(const std::wstring_view arg) const;
-	std::wstring getArg() const;
+	const std::vector<std::wstring>& getArg() const noexcept;
 
 protected:
 	std::map<std::wstring, std::wstring> data;
+	std::vector<std::wstring> command;
 };
 

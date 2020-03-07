@@ -115,12 +115,76 @@ inline Argument::const_reverse_iterator Argument::crend() const noexcept
 	return this->args.crend();
 }
 
-bool ArgParser::parse(int argc, const wchar_t** const argv)
+bool ArgParser::parse(int argc, const wchar_t* argv[])
 {
 	bool raw = false;
-	const wchar_t* str = *argv;
-	for (int i = 0; i < argc; ++i, str = argv[i]) {
+	const wchar_t* arg;
+	std::wstring* val = nullptr;
+	size_t length;
+	for (int i = 0; i < argc; ++i) {
+		arg = argv[i];
+		if (raw) {
+			length = wcslen(arg);
+			const wchar_t* end = arg + length;
+			std::wstring temp;
+			for (const wchar_t* ptr = arg; ptr != end; ++ptr) {
+				if (*ptr == L'\"') {
+					if (ptr != arg && *(ptr - 1) == L'\\') {
+						temp.erase(temp.end() - 1);
+						temp += L'\"';
+						continue;
+					}
+					if (ptr != end - 1) {
+						this->data.clear();
+						return false;
+					}
+					else {
+						raw = false;
+					}
+				}
+			}
+			val->append(temp);
+			if (raw) {
+				*val += L' ';
+			}
+		}
+		else {
+			if (*arg == L'-' || *arg == L'/') {
+				val = &this->data[arg + 1];
+			}
+			else {
+				if (*arg == L'\"') {
+					raw = true;
+					const wchar_t* end = arg + wcslen(arg);
+					for (const wchar_t* ptr = arg + 1; ptr != end; ++ptr) {
+						if (*ptr == L'\"') {
+							if (ptr == end - 1) {
+								raw = false;
+							}
+							else if (*(ptr - 1) == L'\\') {
+								val->erase(val->end() - 1);
+								*val += L'\"';
+							}
+							else {
+								this->data.clear();
+								return false;
+							}
+						}
+						else {
+							*val += *ptr;
+						}
+					}
+				}
+				else {
+					if (val != nullptr) {
 
+					}
+					else {
+
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -133,7 +197,18 @@ void ArgParser::setDefault(const Argument& arg, const std::wstring_view val)
 
 void ArgParser::setDefault(const std::wstring_view val)
 {
-	data[L""] = val;
+	this->command.clear();
+	this->command.push_back(val.data());
+}
+
+void ArgParser::setDefault(const std::vector<std::wstring>&& val)
+{
+	this->command = std::move(val);
+}
+
+void ArgParser::setDefault(const std::vector<std::wstring>& val)
+{
+	this->command = val;
 }
 
 bool ArgParser::hasArg(const Argument& arg) const
@@ -166,10 +241,7 @@ std::wstring ArgParser::getArg(const std::wstring_view arg) const
 	return std::wstring();
 }
 
-std::wstring ArgParser::getArg() const
+inline const std::vector<std::wstring>& ArgParser::getArg() const noexcept
 {
-	if (this->data.find(L"") != this->data.cend()) {
-		return data.at(L"");
-	}
-	return std::wstring();
+	return this->command;
 }
