@@ -48,11 +48,11 @@ class ArgParser
 public:
 	ArgParser() = default;
 	
-	bool parse(int argc, wchar_t** argv);
+	bool parse(int argc, const wchar_t* argv[]);
 
 	void setDefault(const Argument& arg, const std::wstring_view val);
 	void setDefault(const std::wstring_view val);
-	void setDefault(std::vector<std::wstring>&& val);
+	void setDefault(const std::vector<std::wstring>&& val);
 	void setDefault(const std::vector<std::wstring>& val);
 
 	bool hasArg(const Argument& arg) const;

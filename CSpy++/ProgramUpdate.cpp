@@ -9,11 +9,14 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <json/json.h>
+#include <unzipper.h>
 #include "StringExt.h"
 #include "JsonExt.h"
+#include "LogSupport.h"
 #include "Version.h"
 #include "Hasher.h"
 using namespace std;
+using namespace zipper;
 
 namespace {
 	ProgramUpdate* pUpdate = nullptr;
@@ -25,21 +28,25 @@ namespace {
 	DWORD WINAPI autoUpdate(LPVOID) {
 		PostThreadMessage(CS_MAIN_THREADID, WM_UPDATE_START, GetCurrentThreadId(), NULL);
 		UpdateInformation info = ProgramUpdate::getInstance()->checkForUpdate();
+		LOG_INFO(L"Check done.");
 		if (info.code != UpdateCode::CS_UPDATE_OK) {
+			LOG_ERROR(wstring(L"Update failed: ") + ProgramUpdate::getErrorString(info.code) + L" Return code: " + to_wstring((unsigned int)info.code));
 			PostThreadMessage(CS_MAIN_THREADID, WM_UPDATE_CHECKEND, reinterpret_cast<WPARAM>(new UpdateInformation(info)), 0);
 			return 0;
 		}
 		if (!info.available) {
+			LOG_INFO(L"Update failed: Update not available.");
 			PostThreadMessage(CS_MAIN_THREADID, WM_UPDATE_CHECKEND, reinterpret_cast<WPARAM>(new UpdateInformation(info)), 0);
 			return 0;
 		}
 		if (info.currentVersion < Version::currentVersion) {
+			LOG_INFO(L"Update failed: Update not available.");
 			PostThreadMessage(CS_MAIN_THREADID, WM_UPDATE_CHECKEND, reinterpret_cast<WPARAM>(new UpdateInformation(info)), 0);
 			return 0;
 		}
 
-		UpdateResult dlResult = { CS_UPDATE_OK,0 };		
-		if (dlResult.code != CS_UPDATE_OK) {
+		UpdateResult dlResult = { CS_UPDATE_OK,0 };		if (dlResult.code != CS_UPDATE_OK) {
+			LOG_INFO(L"Update failed: Update download failed.");
 			PostThreadMessage(CS_MAIN_THREADID, WM_UPDATE_CHECKEND, reinterpret_cast<WPARAM>(new UpdateInformation(info)), 0);
 			return 0;
 		}
@@ -118,10 +125,12 @@ UpdateResult ProgramUpdate::downloadUpdate(const Version::Package& package) cons
 			wstring errmsg = to_wstring(curl_easy_strerror(res));
 			if (tryCount < 3) {
 				errmsg = L"Network error: Download update failed. Retry count: " + to_wstring(tryCount) + L". Error message: " + errmsg;
+				LOG_ERROR(errmsg);
 				continue;
 			}
 			else {
 				errmsg = L"Network error: Update failed." + to_wstring(tryCount) + L". Error message: " + errmsg;
+				LOG_ERROR(errmsg);
 				result.code = CS_UPDATE_CONNECT_FAILED;
 				result.extraMessage = res;
 				break;
@@ -135,6 +144,7 @@ UpdateResult ProgramUpdate::downloadUpdate(const Version::Package& package) cons
 				continue;
 			}
 			else {
+				LOG_ERROR(L"Update failed: Update file check failed.");
 				result.code = CS_UPDATE_INVALID_FILE;
 				break;
 			}
@@ -159,11 +169,11 @@ UpdateResult ProgramUpdate::update() const
 		return result;
 	}
 	fclose(stream);
-	/*
+
 	Unzipper unz("update.zip");
 	unz.extract();
 	unz.close();
-	*/
+
 	if (filesystem::exists(L"update.exe")) {
 		STARTUPINFO si = { sizeof(STARTUPINFO) };
 		CreateProcessW(L"update.exe", NULL, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, NULL);
@@ -171,6 +181,7 @@ UpdateResult ProgramUpdate::update() const
 		return { CS_UPDATE_OK,0 };
 	}
 	else {
+		LOG_ERROR(L"fatal: update failed: cannot find update.exe. abort.");
 		return { CS_UPDATE_PROGRAM_LOST,0 };
 	}
 }
@@ -228,10 +239,12 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 			wstring errmsg = to_wstring(curl_easy_strerror(code));
 			if (tryCount < 3) {
 				errmsg = L"Network error: Update failed. Retry count: " + to_wstring(tryCount) + L". Error message: " + errmsg;
+				LOG_ERROR(errmsg);
 				continue;
 			}
 			else {
 				errmsg = L"Network error: Update failed." + to_wstring(tryCount) + L". Error message: " + errmsg;
+				LOG_ERROR(errmsg);
 				info.code = CS_UPDATE_CONNECT_FAILED;
 				return info;
 			}
@@ -305,6 +318,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 				return info;
 			}
 			updateCfgUrl = href.asString();
+			LOG_INFO(L"Application Update: Redirect to compatHref[" + to_wstring(result) + L"] - " + to_wstring(updateCfgUrl));
 			--tryCount;
 			continue;
 		}
@@ -317,6 +331,7 @@ UpdateInformation ProgramUpdate::checkForUpdate() const
 					if (enabled.isBool() && destination.isString()) {
 						if (enabled.asBool()) {
 							updateCfgUrl = destination.asString();
+							LOG_INFO(L"Application Update: Redirect to " + to_wstring(updateCfgUrl));
 							--tryCount;
 							continue;
 						}

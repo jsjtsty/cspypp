@@ -73,21 +73,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>E:\Library\nim-duilib-1.0.0\x86-debug;E:\Library\zipper-1.0.1\x86-debug;E:\Library\zlib-1.2.11\x86\ZlibDllDebug\lib;E:\Library\log4cplus-2.0.5\x86-dll-debug\lib;E:\Library\jsoncpp-1.9.2\x86-dll-debug\lib;D:\OpenSSL\1.1.1d\x86\ntdll-debug\lib;E:\Library\curl-7.68.0\libcurl-vc16-x86-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Library\zlib-1.2.11\x86\ZlibDllDebug\include;E:\Library\jsoncpp-1.9.2\x86-dll-debug\include;D:\OpenSSL\1.1.1d\x86\ntdll-debug\include;E:\Library\curl-7.68.0\libcurl-vc16-x86-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Library\nim-duilib-1.0.0\include;E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x86\ZlibDllDebug\include;E:\Library\log4cplus-2.0.5\x86-dll-debug\include;E:\Library\jsoncpp-1.9.2\x86-dll-debug\include;D:\OpenSSL\1.1.1d\x86\ntdll-debug\include;E:\Library\curl-7.68.0\libcurl-vc16-x86-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Library\zlib-1.2.11\x64\ZlibDllDebug\include;E:\Library\jsoncpp-1.9.2\x64-dll-debug\include;D:\OpenSSL\1.1.1d\x64\ntdll-debug\include;E:\Library\curl-7.68.0\libcurl-vc16-x64-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Library\nim-duilib-1.0.0\include;E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x64\ZlibDllDebug\include;E:\Library\log4cplus-2.0.5\x64-dll-debug\include;E:\Library\jsoncpp-1.9.2\x64-dll-debug\include;D:\OpenSSL\1.1.1d\x64\ntdll-debug\include;E:\Library\curl-7.68.0\libcurl-vc16-x64-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Library\nim-duilib-1.0.0\x64-debug;E:\Library\zipper-1.0.1\x64-debug;E:\Library\zlib-1.2.11\x64\ZlibDllDebug\lib;E:\Library\log4cplus-2.0.5\x64-dll-debug\lib;E:\Library\jsoncpp-1.9.2\x64-dll-debug\lib;D:\OpenSSL\1.1.1d\x64\ntdll-debug\lib;E:\Library\curl-7.68.0\libcurl-vc16-x64-debug-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Library\zlib-1.2.11\x86\ZlibDllRelease\include;E:\Library\jsoncpp-1.9.2\x86-dll\include;D:\OpenSSL\1.1.1d\x86\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Library\nim-duilib-1.0.0\include;E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x86\ZlibDllRelease\include;E:\Library\log4cplus-2.0.5\x86-dll\include;E:\Library\jsoncpp-1.9.2\x86-dll\include;D:\OpenSSL\1.1.1d\x86\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Library\nim-duilib-1.0.0\x86;$(LibraryPath);E:\Library\zipper-1.0.1\x86;E:\Library\zlib-1.2.11\x86\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x86-dll\lib;E:\Library\jsoncpp-1.9.2\x86-dll\lib;D:\OpenSSL\1.1.1d\x86\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x86-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Library\zlib-1.2.11\x64\ZlibDllRelease\include;E:\Library\jsoncpp-1.9.2\x64-dll\include;D:\OpenSSL\1.1.1d\x64\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Library\nim-duilib-1.0.0\include;E:\Library\zipper-1.0.1\include;E:\Library\zlib-1.2.11\x64\ZlibDllRelease\include;E:\Library\log4cplus-2.0.5\x64-dll\include;E:\Library\jsoncpp-1.9.2\x64-dll\include;D:\OpenSSL\1.1.1d\x64\ntdll\include;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Library\nim-duilib-1.0.0\x64;$(LibraryPath);E:\Library\zipper-1.0.1\x64;E:\Library\zlib-1.2.11\x64\ZlibDllRelease\lib;E:\Library\log4cplus-2.0.5\x64-dll\lib;E:\Library\jsoncpp-1.9.2\x64-dll\lib;D:\OpenSSL\1.1.1d\x64\ntdll\lib;E:\Library\curl-7.68.0\libcurl-vc16-x64-release-dll-ssl-dll-zlib-dll-ssh2-dll-ipv6-sspi\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -104,7 +104,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurl_debug.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;zlibwapi.lib</AdditionalDependencies>
+      <AdditionalDependencies>ui_components.lib;zipper.lib;duilib_d.lib;base_d.lib;libcurl_debug.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;log4cplusUD.lib;zlibwapi.lib</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
@@ -122,7 +122,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurl_debug.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;zlibwapi.lib</AdditionalDependencies>
+      <AdditionalDependencies>ui_components.lib;zipper.lib;duilib_d.lib;base_d.lib;libcurl_debug.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;log4cplusUD.lib;zlibwapi.lib</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;zlibwapi.lib</AdditionalDependencies>
+      <AdditionalDependencies>ui_components.lib;zipper.lib;duilib.lib;base.lib;libcurl.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;log4cplusU.lib;zlibwapi.lib</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
@@ -166,14 +166,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;zlibwapi.lib</AdditionalDependencies>
+      <AdditionalDependencies>ui_components.lib;zipper.lib;duilib.lib;base.lib;libcurl.lib;%(AdditionalDependencies);libcrypto.lib;libssl.lib;jsoncpp.lib;log4cplusU.lib;zlibwapi.lib</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ArgParser.h" />
+    <ClInclude Include="basic_form.h" />
     <ClInclude Include="CPUID.h" />
-    <ClInclude Include="CriticalSection.h" />
     <ClInclude Include="CSpy++.h" />
     <ClInclude Include="Directory.h" />
     <ClInclude Include="ExtendConfig.h" />
@@ -188,7 +188,7 @@
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="JsonExt.h" />
     <ClInclude Include="LicenseReader.h" />
-    <ClInclude Include="Log.h" />
+    <ClInclude Include="LogSupport.h" />
     <ClInclude Include="MainThread.h" />
     <ClInclude Include="MonitorConfig.h" />
     <ClInclude Include="Node.h" />
@@ -208,10 +208,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArgParser.cpp" />
+    <ClCompile Include="basic_form.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="CPUID.cpp" />
-    <ClCompile Include="CriticalSection.cpp" />
     <ClCompile Include="CSpy++.cpp" />
     <ClCompile Include="Dependency.cpp" />
     <ClCompile Include="Directory.cpp" />
@@ -225,7 +225,6 @@
     <ClCompile Include="Initialization.cpp" />
     <ClCompile Include="JsonExt.cpp" />
     <ClCompile Include="LicenseReader.cpp" />
-    <ClCompile Include="Log.cpp" />
     <ClCompile Include="MonitorConfig.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Plugin.cpp" />

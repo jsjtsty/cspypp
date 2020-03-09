@@ -16,9 +16,9 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR lpCmdLine, int nCmd
 		return 0;
 	}
 
-	//zipper::Unzipper unz("update.zip");
-	//unz.extract();
-	//unz.close();
+	zipper::Unzipper unz("update.zip");
+	unz.extract();
+	unz.close();
 
 	return 0;
 }
