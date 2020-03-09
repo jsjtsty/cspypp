@@ -24,7 +24,7 @@ inline void Argument::addArgString(const std::wstring_view arg)
 
 inline void Argument::addArgString(std::wstring&& arg)
 {
-	this->args.insert(std::move(arg));
+	this->args.insert(std::forward<std::wstring>(arg));
 }
 
 inline void Argument::deleteArgString(const std::wstring_view arg)
@@ -115,13 +115,13 @@ inline Argument::const_reverse_iterator Argument::crend() const noexcept
 	return this->args.crend();
 }
 
-bool ArgParser::parse(int argc, const wchar_t* argv[])
+bool ArgParser::parse(int argc, wchar_t** argv)
 {
 	bool raw = false;
 	const wchar_t* arg;
 	std::wstring* val = nullptr;
 	size_t length;
-	for (int i = 0; i < argc; ++i) {
+	for (int i = 1; i < argc; ++i) {
 		arg = argv[i];
 		if (raw) {
 			length = wcslen(arg);
@@ -136,6 +136,7 @@ bool ArgParser::parse(int argc, const wchar_t* argv[])
 					}
 					if (ptr != end - 1) {
 						this->data.clear();
+						this->command.clear();
 						return false;
 					}
 					else {
@@ -143,49 +144,68 @@ bool ArgParser::parse(int argc, const wchar_t* argv[])
 					}
 				}
 			}
-			val->append(temp);
-			if (raw) {
-				*val += L' ';
+
+			if (val != nullptr) {
+				val->append(temp);
+				if (raw) {
+					*val += L' ';
+				}
+			}
+			else {
+				auto it = this->command.rbegin();
+				it->append(temp);
+				if (raw) {
+					*it += L' ';
+				}
 			}
 		}
 		else {
 			if (*arg == L'-' || *arg == L'/') {
 				val = &this->data[arg + 1];
 			}
-			else {
-				if (*arg == L'\"') {
-					raw = true;
-					const wchar_t* end = arg + wcslen(arg);
-					for (const wchar_t* ptr = arg + 1; ptr != end; ++ptr) {
-						if (*ptr == L'\"') {
-							if (ptr == end - 1) {
-								raw = false;
-							}
-							else if (*(ptr - 1) == L'\\') {
-								val->erase(val->end() - 1);
-								*val += L'\"';
-							}
-							else {
-								this->data.clear();
-								return false;
-							}
+			else if (*arg == L'\"') {
+				raw = true;
+				const wchar_t* end = arg + wcslen(arg);
+				std::wstring temp;
+				for (const wchar_t* ptr = arg + 1; ptr != end; ++ptr) {
+					if (*ptr == L'\"') {
+						if (ptr == end - 1) {
+							raw = false;
+						}
+						else if (*(ptr - 1) == L'\\') {
+							temp.erase(val->end() - 1);
+							temp += L'\"';
 						}
 						else {
-							*val += *ptr;
+							this->data.clear();
+							this->command.clear();
+							return false;
 						}
 					}
+					else {
+						temp += *ptr;
+					}
+				}
+
+				if (val != nullptr) {
+					*val += temp + L' ';
 				}
 				else {
-					if (val != nullptr) {
-
-					}
-					else {
-
-					}
+					this->command.push_back(std::move(temp));
+				}
+			}
+			else {
+				if (val != nullptr) {
+					*val = arg;
+					val = nullptr;
+				}
+				else {
+					this->command.push_back(arg);
 				}
 			}
 		}
 	}
+	return true;
 }
 
 void ArgParser::setDefault(const Argument& arg, const std::wstring_view val)
@@ -201,9 +221,9 @@ void ArgParser::setDefault(const std::wstring_view val)
 	this->command.push_back(val.data());
 }
 
-void ArgParser::setDefault(const std::vector<std::wstring>&& val)
+void ArgParser::setDefault(std::vector<std::wstring>&& val)
 {
-	this->command = std::move(val);
+	this->command = std::forward<std::vector<std::wstring>>(val);
 }
 
 void ArgParser::setDefault(const std::vector<std::wstring>& val)

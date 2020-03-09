@@ -60,9 +60,6 @@
     <ClInclude Include="Version.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LogSupport.h">
-      <Filter>Dependencies</Filter>
-    </ClInclude>
     <ClInclude Include="JsonExt.h">
       <Filter>Dependencies</Filter>
     </ClInclude>
@@ -117,9 +114,6 @@
     <ClInclude Include="RSAKey.h">
       <Filter>Encryption</Filter>
     </ClInclude>
-    <ClInclude Include="basic_form.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MainThread.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -143,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="ExtendConfig.h">
       <Filter>DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CriticalSection.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +212,6 @@
     <ClCompile Include="RSAKey.cpp">
       <Filter>Encryption</Filter>
     </ClCompile>
-    <ClCompile Include="basic_form.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CPUID.cpp">
       <Filter>ComputerMonitor</Filter>
     </ClCompile>
@@ -238,6 +235,12 @@
     </ClCompile>
     <ClCompile Include="ExtendConfig.cpp">
       <Filter>DataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="CriticalSection.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

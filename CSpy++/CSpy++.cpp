@@ -9,7 +9,7 @@ HINSTANCE hInst;
 
 int __cdecl CommandLineMain();
 
-int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
@@ -20,13 +20,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	//MainThread thread;
 	//thread.RunOnCurrentThreadWithLoop(nbase::MessageLoop::kUIMessageLoop);
 
-	int res;
-	if (res = CommandLineMain()) {
-		TerminateProcess(GetCurrentProcess(), res);
-		return res;
-	}
+	//int res;
+	//if (res = CommandLineMain()) {
+	//	return res;
+	//}
 
-	TerminateProcess(GetCurrentProcess(), 0);
 	return 0;
 }
 
