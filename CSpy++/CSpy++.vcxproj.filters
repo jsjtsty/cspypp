@@ -142,7 +142,7 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="LogStream.h">
-      <Filter>头文件</Filter>
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +240,7 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="LogStream.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <shellapi.h>
 #include "Directory.h"
+#include "LogStream.h"
 
 HINSTANCE hInst;
 
@@ -16,9 +17,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-
-	//MainThread thread;
-	//thread.RunOnCurrentThreadWithLoop(nbase::MessageLoop::kUIMessageLoop);
 
 	//int res;
 	//if (res = CommandLineMain()) {

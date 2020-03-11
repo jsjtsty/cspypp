@@ -86,11 +86,11 @@ wstring Time::toString(bool local) const
 	wchar_t buffer[64];
 	if (local) {
 		SYSTEMTIME time = toLocalSystemTime();
-		_snwprintf_s(buffer, 64, 63, L"%u/%u/%u %02u:%02u:%02u.%03u", time.wYear, time.wMonth, time.wDay, time.wHour, 
+		_snwprintf_s(buffer, 64, 63, L"%02hu-%02hu-%02hu %02hu:%02hu:%02hu.%03u", time.wYear, time.wMonth, time.wDay, time.wHour, 
 			time.wMinute, time.wSecond, time.wMilliseconds);
 	}
 	else {
-		_snwprintf_s(buffer, 64, 63, L"%u/%u/%u %02u:%02u:%02u.%03u", year, month, day, hour, minute, second, milliseconds);
+		_snwprintf_s(buffer, 64, 63, L"%02hu-%02hu-%02hu %02hu:%02hu:%02hu.%03u", year, month, day, hour, minute, second, milliseconds);
 	}
 	return buffer;
 }
@@ -659,7 +659,7 @@ Time Time::getLocalTime()
 {
 	SYSTEMTIME st;
 	GetLocalTime(&st);
-	return st;
+	return Time(st, true);
 }
 
 Time Time::getSystemTime()

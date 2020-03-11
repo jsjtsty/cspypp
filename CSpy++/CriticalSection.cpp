@@ -14,12 +14,12 @@ CriticalSection::~CriticalSection()
 	}
 }
 
-inline bool CriticalSection::isInitialized() const
+bool CriticalSection::isInitialized() const
 {
 	return status;
 }
 
-inline void CriticalSection::init()
+void CriticalSection::init()
 {
 	if (!status) {
 		InitializeCriticalSection(&section);
