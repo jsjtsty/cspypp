@@ -188,7 +188,7 @@
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="JsonExt.h" />
     <ClInclude Include="LicenseReader.h" />
-    <ClInclude Include="Log.h" />
+    <ClInclude Include="LogStream.h" />
     <ClInclude Include="MainThread.h" />
     <ClInclude Include="MonitorConfig.h" />
     <ClInclude Include="Node.h" />
@@ -225,7 +225,7 @@
     <ClCompile Include="Initialization.cpp" />
     <ClCompile Include="JsonExt.cpp" />
     <ClCompile Include="LicenseReader.cpp" />
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LogStream.cpp" />
     <ClCompile Include="MonitorConfig.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Plugin.cpp" />

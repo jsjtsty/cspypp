@@ -138,11 +138,11 @@
     <ClInclude Include="ExtendConfig.h">
       <Filter>DataManager</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Util</Filter>
-    </ClInclude>
     <ClInclude Include="CriticalSection.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="LogStream.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,11 +236,11 @@
     <ClCompile Include="ExtendConfig.cpp">
       <Filter>DataManager</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="CriticalSection.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="LogStream.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <cstdint>
 #include <string>
+#include <ostream>
 #include <stdexcept>
 
 class Time
@@ -56,6 +57,8 @@ public:
 	static Time getLocalTime();
 	static Time getSystemTime();
 	static bool isLeapYear(uint16_t year);
+
+	friend std::ostream& operator<<(std::ostream& out, const Time& val);
 
 protected:
 	uint16_t year = 0, milliseconds = 0;

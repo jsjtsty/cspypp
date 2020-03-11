@@ -939,3 +939,9 @@ bool Time::operator>=(const Time & other) const
 		}
 	}
 }
+
+inline std::ostream& operator<<(std::ostream& out, const Time& val)
+{
+	out << val.toString().c_str();
+	return out;
+}
