@@ -40,6 +40,9 @@
     <Filter Include="Plugin">
       <UniqueIdentifier>{e07099ae-1b69-4132-846c-e78c798988f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{61be3086-65e7-4616-bc62-febcf2f3e831}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -55,9 +58,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="general.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Version.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="JsonExt.h">
@@ -114,9 +114,6 @@
     <ClInclude Include="RSAKey.h">
       <Filter>Encryption</Filter>
     </ClInclude>
-    <ClInclude Include="MainThread.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CPUID.h">
       <Filter>ComputerMonitor</Filter>
     </ClInclude>
@@ -144,15 +141,24 @@
     <ClInclude Include="LogStream.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="Version.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MainThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDialog.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InitProgramWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpy++.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Initialization.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Version.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Constants.cpp">
@@ -241,6 +247,15 @@
     </ClCompile>
     <ClCompile Include="LogStream.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Version.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDialog.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InitProgramWindow.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

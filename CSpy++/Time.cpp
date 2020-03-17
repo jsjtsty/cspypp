@@ -1,5 +1,4 @@
 #include "Time.h"
-using namespace std;
 
 Time::Time(const SYSTEMTIME & _val, bool local)
 {
@@ -81,7 +80,7 @@ FILETIME Time::toLocalFileTime() const
 	return res;
 }
 
-wstring Time::toString(bool local) const
+std::wstring Time::toString(bool local) const
 {
 	wchar_t buffer[64];
 	if (local) {
@@ -95,7 +94,7 @@ wstring Time::toString(bool local) const
 	return buffer;
 }
 
-string Time::toANSIString(bool local) const
+std::string Time::toANSIString(bool local) const
 {
 	char buffer[64];
 	if (local) {
@@ -109,13 +108,13 @@ string Time::toANSIString(bool local) const
 	return buffer;
 }
 
-wstring Time::format(const wstring& _format) const
+std::wstring Time::format(const std::wstring& _format) const
 {
 	constexpr const wchar_t* const week[7] = { L"Sunday",L"Monday",L"Tuesday",L"Wednesday",L"Thursday",L"Friday",L"Saturday" };
 	constexpr const size_t weekLength[7] = { 6,6,7,9,8,6,7 };
 	bool escape = false, escape2 = false;
 	size_t length = 0;
-	for (wstring::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
+	for (std::wstring::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
 		if (escape) {
 			escape = false;
 			switch (*i) {
@@ -203,7 +202,7 @@ wstring Time::format(const wstring& _format) const
 		wchar_t* buffer = new wchar_t[length + 1];
 	int p = 0;
 	escape = false; escape2 = false;
-	for (wstring::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
+	for (std::wstring::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
 		if (escape) {
 			escape = false;
 			switch (*i) {
@@ -358,18 +357,18 @@ wstring Time::format(const wstring& _format) const
 		}
 	}
 	buffer[p] = L'\0';
-	wstring res = buffer;
+	std::wstring res = buffer;
 	delete[] buffer;
 	return res;
 }
 
-string Time::format(const string & _format) const
+std::string Time::format(const std::string & _format) const
 {
 		constexpr const char* const week[7] = { "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday" };
 	constexpr const size_t weekLength[7] = { 6,6,7,9,8,6,7 };
 	bool escape = false, escape2 = false;
 	size_t length = 0;
-	for (string::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
+	for (std::string::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
 		if (escape) {
 			escape = false;
 			switch (*i) {
@@ -454,10 +453,10 @@ string Time::format(const string & _format) const
 		}
 	}
 
-		char* buffer = new char[length + 1];
+	char* buffer = new char[length + 1];
 	int p = 0;
 	escape = false; escape2 = false;
-	for (string::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
+	for (std::string::const_iterator i = _format.cbegin(); i != _format.cend(); ++i) {
 		if (escape) {
 			escape = false;
 			switch (*i) {
@@ -612,16 +611,16 @@ string Time::format(const string & _format) const
 		}
 	}
 	buffer[p] = '\0';
-	string res = buffer;
+	std::string res = buffer;
 	delete[] buffer;
 	return res;
 }
 
-Time& Time::parse(const wstring & str)
+Time& Time::parse(const std::wstring & str)
 {
 	uint16_t y, ms;
 	uint8_t mo, d, h, min, s;
-	int res = _snwscanf_s(str.c_str(), str.length(), L"%hu/%hhu/%hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
+	int res = _snwscanf_s(str.c_str(), str.length(), L"%hu-%02hhu-%02hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
 	if (res == EOF) {
 		throw TimeError("Unsupported format.");
 		return *this;
@@ -636,11 +635,11 @@ Time& Time::parse(const wstring & str)
 	return *this;
 }
 
-Time& Time::parse(const string & str)
+Time& Time::parse(const std::string & str)
 {
 	uint16_t y, ms;
 	uint8_t mo, d, h, min, s;
-	int res = _snscanf_s(str.c_str(), str.length(), "%hu/%hhu/%hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
+	int res = _snscanf_s(str.c_str(), str.length(), "%hu-%02hhu-%02hhu %02hhu:%02hhu:%02hhu.%03hu", &y, &mo, &d, &h, &min, &s, &ms);
 	if (res == EOF) {
 		throw TimeError("Unsupported format.");
 		return *this;

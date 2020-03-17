@@ -21,10 +21,6 @@ int __cdecl CommandLineMain()
 		return 0;
 	}
 
-	//freopen("conout$", "wt+", stdout);
-	//freopen("conerr$", "wt+", stderr);
-	//freopen("conin$", "rt+", stdin);
-
 	ArgParser parser;
 	if (!parser.parse(__argc, __wargv)) {
 		wcout << L"Invalid command." << endl;
@@ -34,12 +30,9 @@ int __cdecl CommandLineMain()
 	Argument arg{ L"v",L"-version" };
 	if (parser.hasArg(arg)) {
 		std::wstringstream ss;
-		printf("Fuck!\n");
-		wcout << L"CSpy++ " << CS_VERSION << L" jsoncpp/1.9.2 " << std::to_wstring(curl_version()) << endl;
-		wcout << L"Release Date: " << CS_VERSION_RELEASEDATE_YEAR << L"-" << CS_VERSION_RELEASEDATE_MONTH << L"-"
-			<< CS_VERSION_RELEASEDATE_DAY << endl;
-		MessageBox(NULL, ss.str().c_str(), L"Info", MB_ICONINFORMATION);
-		//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), ss.str().c_str(), ss.str().size(), NULL, NULL);
+		ss << L"CSpy++ " << CS_VERSION << L" jsoncpp/1.9.2 " << std::to_wstring(curl_version()) << endl;
+		ss << L"Release Date: " << CS_VERSION_RELEASEDATE_YEAR << L"-" << CS_VERSION_RELEASEDATE_MONTH << L"-"
+			<< CS_VERSION_RELEASEDATE_DAY << endl << endl;
 		return 1;
 	}
 
